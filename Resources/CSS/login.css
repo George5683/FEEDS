@@ -1,0 +1,68 @@
+body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+}
+
+.left-side {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1B264E; /* Dark blue */
+}
+
+.left-side img {
+    width: 80%; /* Adjust the width as needed */
+}
+
+.right-side {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #80B8D1; /* Light blue */
+}
+
+.form-container {
+    width: 80%; /* Adjust width as needed */
+}
+
+h1 {
+    font-size: 48px; /* Make LOGIN text larger */
+    margin: 0; /* Remove padding */
+    text-align: left; /* Align text to the left */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the left */
+    width: 100%;
+}
+
+label {
+    font-size: 24px; /* Make label text larger */
+    margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 24px; /* Make input text larger */
+}
+
+input[type="submit"] {
+    background-color: #1B264E;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px; /* Add margin to separate from the input fields */
+}
+
+input[type="submit"]:hover {
+    background-color: #14203B;
+}
