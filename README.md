@@ -9,3 +9,7 @@ This is the software engineering project.
 # For mySQL
 - The user is admin and the password is password
 - Start the service on codespace (sudo service mysql start)
+
+# Structure for mySQL
+- Database name is USERS
+- There is 1 table: "login" with a Username and Password as well as an id incrementing automatically.
