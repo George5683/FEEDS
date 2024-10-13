@@ -7,21 +7,31 @@
     <link rel="stylesheet" href="../CSS/login.css">
 </head>
 <body>
-    <div class="left-side">
-        <img src="../PNG/logo.png" alt="Login Image">
+    <div class="Sign-Up form">
+        <h1>Create Account</h1>
+        <span>Enter a valid email and password</span>
+        <form>
+            <input type="name" id="name" name="name" placeholder="Enter Name" required>
+            <input type="email" id="email" name="email" placeholder="Enter Email" required>
+            <input type="password" id="password" name="password" placeholder="Enter Password" required>            
+            <button>Sign Up</button>
+        </form>
     </div>
-    <div class="right-side">
-        <div class="form-container">
-            <h1>FEEDS</h1>
-            <h2>LOGIN</h2>
-            <form>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                <input type="submit" value="Login">
-            </form>
-        </div>
+
+    <div class="Sign-In form">
+        <h1>Sign In</h1>
+        <span>Enter your email and password</span>
+        <form>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <a href="#">Forgot Password?</a>
+            <button>Sign In</button>
+        </form>
+        
+    </div>
+
+    <div class="toggle-panel toggle-right">
+        <img src="../PNG/logo.png" alt="Login Image">
     </div>
     <script src="script.js"></script>
 </body>
