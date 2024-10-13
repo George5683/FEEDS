@@ -149,7 +149,6 @@ function InsertNewPantry(username, password, name, zip_code) {
     });
   });
 }
-// InsertNewPantry('admin', 'password', 'Admin Pantry', '12345');
 
 //TODO: Function to Create a new Table for a new Pantry within PANTRIES Database
 function CreateNewPantryTable(NEW_PANTRY_NAME) {
