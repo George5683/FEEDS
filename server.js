@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql2/promise');
+const mysql = require('mysql2');
 const path = require('path');
 const app = express();
 const PORT = 8005;
@@ -16,93 +16,60 @@ function setupServer() {
   });
 }
 
-function AddUser() {
-  app.post('/AddUser', async (req, res) => {
-    // Get the data from the request
-    const { Name, ZipCode, email, password } = req.body;
+// Function to add a user
+function add_user(username, password, email) {
+  // Create a connection to the database
+  const connection = mysql.createConnection({
+    host: '192.168.0.11', // Replace with your Raspberry Pi's IP
+    user: 'admin',              // The user you created
+    password: 'password',     // The user's password
+    database: 'USERS'             // The database name
+  });
 
-    // Connect to the database
-    const connection = await mysql.createConnection({
-      host: 'localhost',
-      user: 'admin',
-      password: 'password',
-      database: 'FEEDS',
+  // Connect to the database
+  connection.connect(err => {
+    if (err) {
+      console.error('Error connecting to the database:', err);
+      return;
+    }
+    console.log('Connected to the database!');
+
+    // SQL query to insert a new user
+    const sql = 'INSERT INTO logins (Username, Password, Email) VALUES (?, ?, ?)';
+    const values = [username, password, email];
+
+    // Execute the query
+    connection.query(sql, values, (err, results) => {
+      if (err) {
+        console.error('Error adding user:', err);
+        return;
+      }
+      console.log('User added with ID:', results.insertId);
+      
+      // Close the connection
+      connection.end(err => {
+        if (err) {
+          console.error('Error closing the connection:', err);
+        } else {
+          console.log('Connection closed.');
+        }
+      });
     });
-
-    // Insert the data into the database
-    await connection.execute('INSERT INTO users (Name, ZipCode, email, password) VALUES (?, ?, ?, ?)', [Name, ZipCode, email, password]);
-
-    // Close the connection
-    await connection.end();
-
-    // Send a response
-    res.send('User ' + Name + ' added successfully!');
   });
 }
 
-function SearchUser() {
-  app.get('/SearchUser', async (req, res) => {
-    try {
-      // Get the data from the request
-      const { email, password } = req.query;
+//TODO: Function to delete users from database
 
-      // Connect to the database
-      const connection = await mysql.createConnection({
-        host: 'localhost',
-        user: 'admin',
-        password: 'password',
-        database: 'FEEDS',
-      });
+//TODO: Function to update user information
 
-      // Search for the user in the database
-      const [rows] = await connection.execute('SELECT * FROM users WHERE email = ? AND password = ?', [email, password]);
-
-      // Close the connection
-      await connection.end();
-
-      // Send a response
-      res.json(rows);
-    } catch (error) {
-      console.error('Error searching for user:' + email + ". Error code:", error);
-      res.status(500).send('Error searching for user');
-    }
-  });
-}
-
-function DeleteUser() {
-  app.delete('/DeleteUser', async (req, res) => {
-    try {
-      // Get the data from the request
-      const { email, password } = req.query;
-
-      // Connect to the database
-      const connection = await mysql.createConnection({
-        host: 'localhost',
-        user: 'admin',
-        password: 'password',
-        database: 'FEEDS',
-      });
-
-      // Delete the user from the database
-      await connection.execute('DELETE FROM users WHERE email = ? AND password = ?', [email, password]);
-
-      // Close the connection
-      await connection.end();
-
-      // Send a response
-      res.send('User ' + email + ' deleted successfully!');
-    } catch (error) {
-      console.error('Error deleting user:' + email + ". Error code:", error);
-      res.status(500).send('Error deleting user');
-    }
-  });
-}
+//TODO: Function to Insert Pantries into Pantry Table
 
 // ______________________Functions Above__________________________________________________________________________
 
 // Main function to initialize the server
 async function main() {
   setupServer();
+  add_user("HELL", "HOLE", "HellHole@gmail.com");
 
   // Start the server
   app.listen(PORT, () => {
