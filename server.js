@@ -149,13 +149,55 @@ function InsertNewPantry(username, password, name, zip_code) {
     });
   });
 }
-
-// Example usage
 // InsertNewPantry('admin', 'password', 'Admin Pantry', '12345');
 
-//TODO: Function to Create a new Table for a new Pantry within PANTRY
+//TODO: Function to Create a new Table for a new Pantry within PANTRIES Database
+function CreateNewPantryTable(NEW_PANTRY_NAME) {
+  // Create a connection to the PANTRIES database
+  const connection = mysql.createConnection({
+    host: '192.168.0.11', // Replace with your Raspberry Pi's IP
+    user: 'admin',         // The user you created
+    password: 'password',  // The user's password
+    database: 'PANTRIES'   // The PANTRIES database
+  });
 
-//TODO: 
+  // Connect to the database
+  connection.connect(err => {
+    if (err) {
+      console.error('Error connecting to the database:', err);
+      return;
+    }
+    console.log('Connected to the PANTRIES database!');
+
+    // SQL query to create a new pantry table dynamically
+    const sql = `CREATE TABLE \`${NEW_PANTRY_NAME}\` (
+      FOOD_ID INT AUTO_INCREMENT PRIMARY KEY,
+      STOCK_NAME VARCHAR(255) NOT NULL,
+      QUANTITY INT DEFAULT 0,
+      STATUS VARCHAR(255) NOT NULL
+    )`;
+
+    // Execute the query
+    connection.query(sql, (err, results) => {
+      if (err) {
+        console.error('Error creating table:', err);
+        return;
+      }
+      console.log(`New pantry table '${NEW_PANTRY_NAME}' created successfully.`);
+      
+      // Close the connection
+      connection.end(err => {
+        if (err) {
+          console.error('Error closing the connection:', err);
+        } else {
+          console.log('Connection closed.');
+        }
+      });
+    });
+  });
+}
+
+//TODO: Function to add food items to a pantry named in the PANTRY_INFO Table 
 
 // ______________________Functions Above__________________________________________________________________________
 
