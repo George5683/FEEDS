@@ -12,4 +12,4 @@ This is the software engineering project.
 
 # Structure for mySQL
 - Database name is USERS
-- There is 1 table: "login" with a Username and Password as well as an id incrementing automatically.
+- There is 1 table: "logins" with a Username and Password as well as an id incrementing automatically.
