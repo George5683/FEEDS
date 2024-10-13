@@ -59,6 +59,51 @@ function add_user(username, password, name, zip_code, email) {
 }
 
 //TODO: Function to delete users from database
+// Function to delete a user
+function deleteUser(username) {
+  // Create a connection to the database
+  const connection = mysql.createConnection({
+    host: '192.168.0.11', // Replace with your Raspberry Pi's IP
+    user: 'admin',         // The user you created
+    password: 'password',  // The user's password
+    database: 'USERS'      // The database name where USER_INFO is located
+  });
+
+  // Connect to the database
+  connection.connect(err => {
+    if (err) {
+      console.error('Error connecting to the database:', err);
+      return;
+    }
+    console.log('Connected to the USERS database!');
+
+    // SQL query to delete a user by username
+    const sql = 'DELETE FROM USER_INFO WHERE USERNAME = ?';
+    const values = [username];
+
+    // Execute the query
+    connection.query(sql, values, (err, results) => {
+      if (err) {
+        console.error('Error deleting user:', err);
+        return;
+      }
+      if (results.affectedRows > 0) {
+        console.log('User deleted successfully.');
+      } else {
+        console.log('No user found with that username.');
+      }
+
+      // Close the connection
+      connection.end(err => {
+        if (err) {
+          console.error('Error closing the connection:', err);
+        } else {
+          console.log('Connection closed.');
+        }
+      });
+    });
+  });
+}
 
 //TODO: Function to update user information
 
