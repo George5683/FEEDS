@@ -13,3 +13,9 @@ This is the software engineering project.
 # Structure for mySQL
 - Database name is USERS
 - There is 1 table: "logins" with a Username and Password as well as an id incrementing automatically.
+
+# Start the MariaDB service
+sudo systemctl start mariadb
+
+# Access the MariaDB command line
+sudo mysql -u admin -p
