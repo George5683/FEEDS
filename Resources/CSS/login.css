@@ -1,68 +1,138 @@
+/* General body styling */
 body {
-    height: 100vh;
     margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
     display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0; /* Light grey background */
 }
 
+/* Centered image/logo at the top */
+.logo-container {
+    text-align: center;
+}
+
+.logo-container img {
+    max-width: 150px; 
+    display: block;
+    margin: 0 auto; /* Center the image horizontally */
+}
+
+/* Welcome header & subheader */
+.welcome-text {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.welcome-text h1 {
+    font-size: 36px;
+}
+
+.welcome-text h2 {
+    font-size: 18px;
+}
+
+/* Container for both forms (Sign Up and Sign In) */
+.container {
+    display: flex;
+    justify-content: space-between; /* Space between the left and right sides */
+    width: 95%;
+    max-width: 1200px;
+    background-color: transparent;
+}
+
+/* Sign UP */
 .left-side {
-    width: 50%;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1B264E; /* Dark blue */
+    padding: 20px;
+    margin-right: 20px; 
+    background-color: #aed4e6; 
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.left-side img {
-    width: 80%; /* Adjust the width as needed */
-}
-
+/* Sign IN */
 .right-side {
-    width: 50%;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #80B8D1; /* Light blue */
+    padding: 20px;
+    margin-left: 20px; 
+    background-color: #aed4e6; 
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-container {
-    width: 80%; /* Adjust width as needed */
-}
-
-h1 {
-    font-size: 48px; /* Make LOGIN text larger */
-    margin: 0; /* Remove padding */
-    text-align: left; /* Align text to the left */
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align items to the left */
+/* Form container styling (common for both forms) */
+.form {
+    background-color: #ffffff; /* White background inside the grey box */
+    padding: 30px;
+    border-radius: 8px;
     width: 100%;
+    max-width: 400px; /* Max width of the form box */
+    text-align: center;
 }
 
-label {
-    font-size: 24px; /* Make label text larger */
-    margin: 10px 0 5px;
+/* Headings */
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
 }
 
-input[type="text"],
+/* Instructions */
+span {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Input field styles */
+input[type="name"],
+input[type="email"],
 input[type="password"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 5px;
     border: 1px solid #ccc;
-    font-size: 24px; /* Make input text larger */
+    font-size: 16px;
 }
 
-input[type="submit"] {
-    background-color: #1B264E;
-    color: #fff;
-    padding: 10px 20px;
+/* Button styles */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #1B264E; 
+    color: white;
     border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-top: 20px;
     cursor: pointer;
-    margin-top: 20px; /* Add margin to separate from the input fields */
 }
 
-input[type="submit"]:hover {
+button:hover {
     background-color: #14203B;
 }
+
+/* Forgot password link */
+a {
+    display: block;
+    margin-top: 15px;
+    color: #1B264E;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
