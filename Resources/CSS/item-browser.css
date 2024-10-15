@@ -1,0 +1,57 @@
+/* General body styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0; /* Light grey background */
+}
+/* Welcome header & subheader */
+.welcome-text {
+    text-align: left;
+    margin-bottom: 20px;
+    margin-left: 15px;
+}
+
+.welcome-text h1 {
+    font-size: 36px;
+}
+
+.welcome-text h2 {
+    font-size: 18px;
+}
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    width: 90%;
+  }
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+    width: 100%
+}
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+.topnav a:hover {
+    background-color: #aed4e6;
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #1B264E;
+    color: white;
+  }
