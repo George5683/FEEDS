@@ -17,139 +17,74 @@ function setupServer() {
 }
 
 // Function to add a user
-function add_user(username, password, name, zip_code, email) {
-  // Create a connection to the database
-  const connection = mysql.createConnection({
-    host: 'sql5.freesqldatabase.com', // Remote database host
-    user: 'sql5738700',               // Database username
-    password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
-    database: 'sql5738700',           // The database name
-    port: 3306                        // Default MySQL port
-  });
-
-  // Connect to the database
-  connection.connect(err => {
-    if (err) {
-      console.error('Error connecting to the database:', err);
-      return;
-    }
-    console.log('Connected to the USERS database!');
-
-    // SQL query to insert a new user
-    const sql = 'INSERT INTO USER_INFO (USERNAME, PASSWORD, NAME, ZIP_CODE, EMAIL) VALUES (?, ?, ?, ?, ?)';
-    const values = [username, password, name, zip_code, email];
-
-    // Execute the query
-    connection.query(sql, values, (err, results) => {
-      if (err) {
-        console.error('Error adding user:', err);
-        return;
-      }
-      console.log('User added with ID:', results.insertId);
-      
-      // Close the connection
-      connection.end(err => {
-        if (err) {
-          console.error('Error closing the connection:', err);
-        } else {
-          console.log('Connection closed.');
-        }
-      });
+async function add_user(username, password, name, zip_code, email) {
+  try {
+    const connection = await mysql.createConnection({
+      host: 'sql5.freesqldatabase.com', // Remote database host
+      user: 'sql5738700',               // Database username
+      password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
+      database: 'sql5738700',           // The database name
+      port: 3306                        // Default MySQL port
     });
-  });
+
+    await connection.execute(
+      'INSERT INTO users (username, password, name, zip_code, email) VALUES (?, ?, ?, ?, ?)',
+      [username, password, name, zip_code, email]
+    );
+
+    await connection.end();
+    console.log('User added successfully!');
+  } catch (error) {
+    console.error('Error adding user:', error);
+  }
 }
 
 //TODO: Function to delete users from database
-function deleteUser(username) {
-  // Create a connection to the database
-  const connection = mysql.createConnection({
-    host: 'sql5.freesqldatabase.com', // Remote database host
-    user: 'sql5738700',               // Database username
-    password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
-    database: 'sql5738700',           // The database name
-    port: 3306                        // Default MySQL port
-  });
-
-  // Connect to the database
-  connection.connect(err => {
-    if (err) {
-      console.error('Error connecting to the database:', err);
-      return;
-    }
-    console.log('Connected to the USERS database!');
-
-    // SQL query to delete a user by username
-    const sql = 'DELETE FROM USER_INFO WHERE USERNAME = ?';
-    const values = [username];
-
-    // Execute the query
-    connection.query(sql, values, (err, results) => {
-      if (err) {
-        console.error('Error deleting user:', err);
-        return;
-      }
-      if (results.affectedRows > 0) {
-        console.log('User deleted successfully.');
-      } else {
-        console.log('No user found with that username.');
-      }
-
-      // Close the connection
-      connection.end(err => {
-        if (err) {
-          console.error('Error closing the connection:', err);
-        } else {
-          console.log('Connection closed.');
-        }
-      });
+async function deleteUser(username) {
+  try {
+    const connection = await mysql.createConnection({
+      host: 'sql5.freesqldatabase.com', // Remote database host
+      user: 'sql5738700',               // Database username
+      password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
+      database: 'sql5738700',           // The database name
+      port: 3306                        // Default MySQL port
     });
-  });
+
+    await connection.execute('DELETE FROM users WHERE username = ?', [username]);
+
+    await connection.end();
+    console.log('User deleted successfully!');
+  } catch (error) {
+    console.error('Error deleting user:', error);
+  }
 }
 
 //TODO: Function to update user information
 
+//TODO: Function to update pantry information
+
 
 //TODO: Function to Insert Pantries into PANTRY_INFO Table
-function InsertNewPantry(username, password, name, zip_code, pantry_id) {
-  // Create a connection to the database
-  const connection = mysql.createConnection({
-    host: 'sql5.freesqldatabase.com', // Remote database host
-    user: 'sql5738700',               // Database username
-    password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
-    database: 'sql5738700',           // The database name
-    port: 3306                        // Default MySQL port
-  });
-
-  // Connect to the database
-  connection.connect(err => {
-    if (err) {
-      console.error('Error connecting to the database:', err);
-      return;
-    }
-    console.log('Connected to the PANTRIES database!');
-
-    // SQL query to insert a new pantry
-    const sql = 'INSERT INTO PANTRY_INFO (USERNAME, PASSWORD, NAME, ZIP_CODE) VALUES (?, ?, ?, ?)';
-    const values = [username, password, name, zip_code];
-
-    // Execute the query
-    connection.query(sql, values, (err, results) => {
-      if (err) {
-        console.error('Error adding new pantry:', err);
-        return;
-      }
-      console.log('Pantry added with ID:', results.insertId);
-      
-      // Close the connection
-      connection.end(err => {
-        if (err) {
-          console.error('Error closing the connection:', err);
-        } else {
-          console.log('Connection closed.');
-        }
-      });
+async function InsertNewPantry(username, password, name, zip_code, pantry_id) {
+  try {
+    const connection = await mysql.createConnection({
+      host: 'sql5.freesqldatabase.com', // Remote database host
+      user: 'sql5738700',               // Database username
+      password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
+      database: 'sql5738700',           // The database name
+      port: 3306                        // Default MySQL port
     });
-  });
+
+    await connection.execute(
+      'INSERT INTO PANTRY_INFO (username, password, name, zip_code, pantry_id) VALUES (?, ?, ?, ?, ?)',
+      [username, password, name, zip_code, pantry_id]
+    );
+
+    await connection.end();
+    console.log('New pantry inserted successfully!');
+  } catch (error) {
+    console.error('Error inserting new pantry:', error);
+  }
 }
 
 //TODO: Function to Create a new Table for a new Pantry 
