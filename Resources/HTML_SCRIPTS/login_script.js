@@ -7,10 +7,9 @@ let SignUpButton = document.getElementById("SignUpButton");
 
 // OnClick Function for the Sign in Button
 SignInButton.onclick = async function(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
 
-    let username = document.getElementById("username_sign_in").value;
-    let password = document.getElementById("password_sign_in").value;
+    let username = document.getElementById("email-sign-in").value;
+    let password = document.getElementById("password-sign-in").value;
     
     let data = { username, password };
 
@@ -38,9 +37,9 @@ SignInButton.onclick = async function(event) {
 SignUpButton.onclick = async function(event) {
     event.preventDefault(); // Prevent the default form submission behavior
 
-    let name = document.getElementById("name_sign_up").value;
-    let username = document.getElementById("username_sign_up").value;
-    let password = document.getElementById("password_sign_up").value;
+    let name = document.getElementById("name-sign-up").value;
+    let username = document.getElementById("email-sign-up").value;
+    let password = document.getElementById("password-sign-up").value;
     
     let data = { username, password, name };
 
