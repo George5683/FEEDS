@@ -61,6 +61,7 @@ async function deleteUser(username) {
 
 //TODO: Function to update user information
 
+
 //TODO: Function to update pantry information
 
 
