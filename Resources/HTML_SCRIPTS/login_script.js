@@ -1,3 +1,4 @@
+// OnClick function for the sign up button
 document.getElementById('Sign-Up Form').addEventListener('submit', async (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
   
@@ -28,6 +29,7 @@ document.getElementById('Sign-Up Form').addEventListener('submit', async (event)
     }
   });
   
+  // OnClick function for the sign in button
   document.getElementById('Sign-In Form').addEventListener('submit', async (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
   
