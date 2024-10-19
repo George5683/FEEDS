@@ -20,10 +20,11 @@ function setupServer() {
 function add_user(username, password, name, zip_code, email) {
   // Create a connection to the database
   const connection = mysql.createConnection({
-    host: '192.168.0.11', // Replace with your Raspberry Pi's IP
-    user: 'admin',         // The user you created
-    password: 'password',  // The user's password
-    database: 'USERS'      // The database name where USER_INFO is located
+    host: 'sql5.freesqldatabase.com', // Remote database host
+    user: 'sql5738700',               // Database username
+    password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
+    database: 'sql5738700',           // The database name
+    port: 3306                        // Default MySQL port
   });
 
   // Connect to the database
@@ -59,14 +60,14 @@ function add_user(username, password, name, zip_code, email) {
 }
 
 //TODO: Function to delete users from database
-// Function to delete a user
 function deleteUser(username) {
   // Create a connection to the database
   const connection = mysql.createConnection({
-    host: '192.168.0.11', // Replace with your Raspberry Pi's IP
-    user: 'admin',         // The user you created
-    password: 'password',  // The user's password
-    database: 'USERS'      // The database name where USER_INFO is located
+    host: 'sql5.freesqldatabase.com', // Remote database host
+    user: 'sql5738700',               // Database username
+    password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
+    database: 'sql5738700',           // The database name
+    port: 3306                        // Default MySQL port
   });
 
   // Connect to the database
@@ -109,13 +110,14 @@ function deleteUser(username) {
 
 
 //TODO: Function to Insert Pantries into PANTRY_INFO Table
-function InsertNewPantry(username, password, name, zip_code) {
+function InsertNewPantry(username, password, name, zip_code, pantry_id) {
   // Create a connection to the database
   const connection = mysql.createConnection({
-    host: '192.168.0.11', // Replace with your Raspberry Pi's IP
-    user: 'admin',         // The user you created
-    password: 'password',  // The user's password
-    database: 'PANTRIES'   // The database name where pantry info is stored
+    host: 'sql5.freesqldatabase.com', // Remote database host
+    user: 'sql5738700',               // Database username
+    password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
+    database: 'sql5738700',           // The database name
+    port: 3306                        // Default MySQL port
   });
 
   // Connect to the database
@@ -150,60 +152,44 @@ function InsertNewPantry(username, password, name, zip_code) {
   });
 }
 
-//TODO: Function to Create a new Table for a new Pantry within PANTRIES Database
-function CreateNewPantryTable(NEW_PANTRY_NAME) {
-  // Create a connection to the PANTRIES database
-  const connection = mysql.createConnection({
-    host: '192.168.0.11', // Replace with your Raspberry Pi's IP
-    user: 'admin',         // The user you created
-    password: 'password',  // The user's password
-    database: 'PANTRIES'   // The PANTRIES database
-  });
-
-  // Connect to the database
-  connection.connect(err => {
-    if (err) {
-      console.error('Error connecting to the database:', err);
-      return;
-    }
-    console.log('Connected to the PANTRIES database!');
-
-    // SQL query to create a new pantry table dynamically
-    const sql = `CREATE TABLE \`${NEW_PANTRY_NAME}\` (
-      FOOD_ID INT AUTO_INCREMENT PRIMARY KEY,
-      STOCK_NAME VARCHAR(255) NOT NULL,
-      QUANTITY INT DEFAULT 0,
-      STATUS VARCHAR(255) NOT NULL
-    )`;
-
-    // Execute the query
-    connection.query(sql, (err, results) => {
-      if (err) {
-        console.error('Error creating table:', err);
-        return;
-      }
-      console.log(`New pantry table '${NEW_PANTRY_NAME}' created successfully.`);
-      
-      // Close the connection
-      connection.end(err => {
-        if (err) {
-          console.error('Error closing the connection:', err);
-        } else {
-          console.log('Connection closed.');
-        }
-      });
+//TODO: Function to Create a new Table for a new Pantry 
+async function CreateNewPantryTable(NEW_PANTRY_NAME) {
+  try {
+    // Connect to the database
+    const connection = await mysql.createConnection({
+      host: 'sql5.freesqldatabase.com', // Remote database host
+      user: 'sql5738700',               // Database username
+      password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
+      database: 'sql5738700',           // The database name
+      port: 3306                        // Default MySQL port
     });
-  });
+
+    // Create the new pantry table
+    await connection.execute(
+      `CREATE TABLE ${NEW_PANTRY_NAME} (
+        FOOD_ID INT AUTO_INCREMENT PRIMARY KEY,
+        FOOD_NAME VARCHAR(255) NOT NULL,
+        STATUS VARCHAR(255) NOT NULL
+      )`
+    );
+
+    // Close the connection
+    await connection.end();
+
+    console.log(`Table ${NEW_PANTRY_NAME} created successfully!`);
+  } catch (error) {
+    console.error('Error creating new pantry table:', error);
+  }
 }
 
-//TODO: Function to add food items to a pantry named in the PANTRY_INFO Table 
+//TODO: Function to add food items to a pantry table
+
 
 // ______________________Functions Above__________________________________________________________________________
 
 // Main function to initialize the server
 async function main() {
   setupServer();
-  add_user("HELL", "HOLE", "HellHole@gmail.com");
 
   // Start the server
   app.listen(PORT, () => {
