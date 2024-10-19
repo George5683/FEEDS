@@ -39,7 +39,7 @@ async function add_user(username, password, name, zip_code, email) {
   }
 }
 
-//TODO: Function to delete users from database
+// Function to delete users from database
 async function deleteUser(username) {
   try {
     const connection = await mysql.createConnection({
@@ -65,7 +65,7 @@ async function deleteUser(username) {
 //TODO: Function to update pantry information
 
 
-//TODO: Function to Insert Pantries into PANTRY_INFO Table
+// Function to Insert Pantries into PANTRY_INFO Table
 async function InsertNewPantry(username, password, name, zip_code, pantry_id) {
   try {
     const connection = await mysql.createConnection({
@@ -88,7 +88,7 @@ async function InsertNewPantry(username, password, name, zip_code, pantry_id) {
   }
 }
 
-//TODO: Function to Create a new Table for a new Pantry 
+// Function to Create a new Table for a new Pantry 
 async function CreateNewPantryTable(NEW_PANTRY_NAME) {
   try {
     // Connect to the database
@@ -120,6 +120,13 @@ async function CreateNewPantryTable(NEW_PANTRY_NAME) {
 
 //TODO: Function to add food items to a pantry table
 
+// __________________________Routing for the login htmls_________________________________________________________________________________
+
+//TODO: Routing for the username, password, name, zip_code, email from the login page
+
+// __________________________Routing for the dashboard htmls_________________________________________________________________________________
+
+//TODO: ROuting for a user to add something to favorites list
 
 // ______________________Functions Above__________________________________________________________________________
 
