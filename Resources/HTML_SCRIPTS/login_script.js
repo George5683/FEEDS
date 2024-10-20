@@ -15,7 +15,7 @@ SignInButton.onclick = async function(event) {
 
     try {
         const response = await fetch('/SignInUser', {
-          method: 'POST',
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
