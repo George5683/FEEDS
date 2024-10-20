@@ -98,7 +98,7 @@ span {
 input[type="name"],
 input[type="email"],
 input[type="password"] {
-    width: 100%;
+    width: 90%;
     padding: 12px;
     margin: 8px 0;
     border-radius: 5px;
@@ -108,7 +108,7 @@ input[type="password"] {
 
 /* Button styles */
 button {
-    width: 100%;
+    width: 95%;
     padding: 12px;
     background-color: #1B264E; 
     color: white;
