@@ -28,7 +28,7 @@ async function add_user(username, password, name, zip_code, email) {
     });
 
     await connection.execute(
-      'INSERT INTO users (username, password, name, zip_code, email) VALUES (?, ?, ?, ?, ?)',
+      'INSERT INTO USER_INFO (username, password, name, zip_code, email) VALUES (?, ?, ?, ?, ?)',
       [username, password, name, zip_code, email]
     );
 
@@ -133,6 +133,8 @@ async function CreateNewPantryTable(NEW_PANTRY_NAME) {
 // Main function to initialize the server
 async function main() {
   setupServer();
+
+  add_user('test_user', 'test_password', 'Test', '12345', 'testing@email.com');  
 
   // Start the server
   app.listen(PORT, () => {
