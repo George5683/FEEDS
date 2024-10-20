@@ -62,6 +62,38 @@ async function deleteUser(username) {
 //TODO: Function to update user information
 
 
+//TODO: Function to verify if user is in database 
+async function verifyUser(username, password) {
+  try {
+    const connection = await mysql.createConnection({
+      host: 'sql5.freesqldatabase.com', // Remote database
+      user: 'sql5738700',               // Database username
+      password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
+      database: 'sql5738700',           // The database name
+      port: 3306                        // Default MySQL port
+    });
+
+    const [rows] = await connection.execute(
+      'SELECT * FROM USER_INFO WHERE username = ? AND password = ?',
+      [username, password]
+    );
+
+    await connection.end();
+
+    if (rows.length > 0) {
+      console.log('User verified successfully!');
+      return true;
+    } else {
+      console.log('User not found!');
+      return false;
+    }
+  } catch (error) {
+    console.error('Error verifying user:', error);
+    return false;
+  }
+}
+
+
 //TODO: Function to update pantry information
 
 
@@ -122,7 +154,34 @@ async function CreateNewPantryTable(NEW_PANTRY_NAME) {
 
 // __________________________Routing for the login htmls_________________________________________________________________________________
 
-//TODO: Routing for the username, password, name, zip_code, email from the login page
+//TODO: Routing for the username, password, name, zip_code, email from the login page sign up
+app.post('/SignUpUser', async (req, res) => {
+  const { username, password, name, zip_code, email } = req.body;
+  try {
+    await add_user(username, password, name, zip_code, email);
+    res.send('User added successfully!');
+  } catch (error) {
+    console.error('Error adding user:', error);
+    res.status(500).send('Error adding user');
+  }
+});
+
+//TODO: Routing for the username and password from the login page sign in
+app.post('/SignInUser', async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const userVerified = await verifyUser(username, password);
+    if (userVerified) {
+      res.send('User signed in successfully!');
+    } else {
+      res.status(401).send('Error signing in');
+    }
+  } catch (error) {
+    console.error('Error signing in:', error);
+    res.status(500).send('Error signing in');
+  }
+});
+
 
 // __________________________Routing for the dashboard htmls_________________________________________________________________________________
 
