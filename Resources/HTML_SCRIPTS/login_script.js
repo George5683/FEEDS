@@ -51,9 +51,13 @@ SignUpButton.onclick = async function(event) {
           },
           body: JSON.stringify(data),
         });
+
+        const result = await response.json();
+
     
         if (response.ok) {
           alert('User sign up successful!');
+          console.log(result);
         } else {
           alert('Error signing up');
         }
