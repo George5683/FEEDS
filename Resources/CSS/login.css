@@ -52,11 +52,16 @@ body {
     color: black;
 }
 
+.input{
+    display: flex;
+    flex-direction: column;
+}
+
 /* Container for both forms (Sign Up and Sign In) */
 .container {
     display: flex;
     justify-content: space-between; /* Space between the left and right sides */
-    width: 95%;
+    width: 100%;
     max-width: 1200px;
     background-color: transparent;
 }
@@ -118,7 +123,7 @@ span {
 input[type="name"],
 input[type="email"],
 input[type="password"] {
-    width: 90%;
+    width: 22rem;
     padding: 12px;
     margin: 8px 0;
     border-radius: 5px;
@@ -128,7 +133,7 @@ input[type="password"] {
 
 /* Button styles */
 button {
-    width: 95%;
+    width: 100%;
     padding: 12px;
     background-color: #1B264E; 
     color: white;
