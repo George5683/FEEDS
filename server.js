@@ -193,8 +193,6 @@ app.post('/SignInUser', async (req, res) => {
 async function main() {
   setupServer();
 
-  add_user('test_user', 'test_password', 'Test', '12345', 'testing@email.com');  
-
   // Start the server
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
