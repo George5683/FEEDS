@@ -1,8 +1,14 @@
-    body {
-    margin: 0;
-    display: flex;
-    height: 100vh;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0; /* Light grey background */
+}
   
   .left-half {
     background-color: white;
