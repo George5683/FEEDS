@@ -11,13 +11,7 @@ body {
     background-color: #101827; /* Light grey background */
 }
 
-.logo-container {
-    /* position: absolute;  */
-    /* top:0; 
-    left:0; */
-    /* padding: 40px; */
 
-}
 
 .registerpasswordrow{
     display: flex;
@@ -30,9 +24,13 @@ body {
 
 .logowelcome{
     display: flex;
+    padding-left: 50px;
 }
 
 .logo-container img {
+        display: flex;
+        justify-content: end;
+        align-items: end;
     max-width: 150px; 
     display: block;
 }
