@@ -70,7 +70,7 @@ body {
 }
 
 /* Sign UP */
-.left-side {
+.center {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -83,17 +83,6 @@ body {
 }
 
 /* Sign IN */
-.right-side {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    margin-left: 20px; 
-    background-color: #4e8f58; 
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 40px;
-}
 
 /* Form container styling (common for both forms) */
 .form {
