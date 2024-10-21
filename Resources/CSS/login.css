@@ -11,16 +11,27 @@ body {
     background-color: #101827; /* Light grey background */
 }
 
-/* Centered image/logo at the top */
 .logo-container {
-    text-align: center;
+    /* position: absolute;  */
+    /* top:0; 
+    left:0; */
+    /* padding: 40px; */
+
+}
+
+.welcome-message{
+    font-size: 64px;
+}
+
+.logowelcome{
+    display: flex;
 }
 
 .logo-container img {
     max-width: 150px; 
     display: block;
-    margin: 0 auto; /* Center the image horizontally */
 }
+
 
 /* Welcome header & subheader */
 .welcome-text {
@@ -41,11 +52,16 @@ body {
     color: black;
 }
 
+.input{
+    display: flex;
+    flex-direction: column;
+}
+
 /* Container for both forms (Sign Up and Sign In) */
 .container {
     display: flex;
     justify-content: space-between; /* Space between the left and right sides */
-    width: 95%;
+    width: 100%;
     max-width: 1200px;
     background-color: transparent;
 }
@@ -60,6 +76,7 @@ body {
     margin-right: 20px; 
     background-color: #4e8f58; 
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 40px;
 }
 
 /* Sign IN */
@@ -72,6 +89,7 @@ body {
     margin-left: 20px; 
     background-color: #4e8f58; 
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 40px;
 }
 
 /* Form container styling (common for both forms) */
@@ -105,7 +123,7 @@ span {
 input[type="name"],
 input[type="email"],
 input[type="password"] {
-    width: 90%;
+    width: 22rem;
     padding: 12px;
     margin: 8px 0;
     border-radius: 5px;
@@ -115,7 +133,7 @@ input[type="password"] {
 
 /* Button styles */
 button {
-    width: 95%;
+    width: 100%;
     padding: 12px;
     background-color: #1B264E; 
     color: white;
@@ -127,7 +145,7 @@ button {
 }
 
 button:hover {
-    background-color: #14203B;
+    background-color: #1e65a7;
 }
 
 /* Forgot password link */
@@ -142,5 +160,6 @@ a {
 
 a:hover {
     text-decoration: underline;
+    color: #1e65a7;
 }
 
