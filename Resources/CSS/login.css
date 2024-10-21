@@ -123,9 +123,7 @@ span {
 }
 
 /* Input field styles */
-input[type="name"],
-input[type="email"],
-input[type="password"] {
+input[type="text"] {
     width: 22rem;
     padding: 12px;
     margin: 8px 0;
