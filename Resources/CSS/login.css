@@ -52,7 +52,7 @@ body {
     color: black;
 }
 
-.input{
+.userinput{
     display: flex;
     flex-direction: column;
 }
@@ -162,4 +162,3 @@ a:hover {
     text-decoration: underline;
     color: #1e65a7;
 }
-
