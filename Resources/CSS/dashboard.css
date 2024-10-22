@@ -6,7 +6,7 @@
   flex-direction: column; /* Stack elements vertically */
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0; /* Light grey background */
+  background-color: #101827; 
 }
 
 .topnav {
@@ -26,18 +26,26 @@
 
 /* Change the color of links on hover */
 .topnav a:hover {
-  background-color: #aed4e6;
+  background-color: #4e8f58;
   color: black;
 }
 
 /* Add a color to the active/current link */
 .topnav a.active {
-  background-color: #1B264E;
+  background-color: darkgreen;
   color: white;
+}
+
+h1 {
+  color: white
 }
 
 h2 {
   text-align: center;
+}
+
+h3 {
+  color: white
 }
 
 h4 {
@@ -76,36 +84,20 @@ h4 {
   align-items: center;
   padding: 20px;
   margin-right: 20px; 
-  background-color: #aed4e6; 
+  background-color: #4e8f58;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 40px;
 }
-  
-  .left-half {
-    background-color: white;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .right-half {
-    background-color: black;    
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
   .pantry {
     background-color: white;
     width: 100%;
+    border-radius: 40px;
   }
 
   button {
     width: 40%;
     padding: 6px;
-    background-color: #1B264E; 
+    background-color: darkgreen; 
     color: white;
     border: none;
     border-radius: 5px;
