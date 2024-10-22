@@ -1,8 +1,58 @@
-    body {
-    margin: 0;
-    display: flex;
-    height: 100vh;
-  }
+  body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0; /* Light grey background */
+}
+
+h2 {
+  text-align: center;
+}
+
+h4 {
+  text-align: center;
+  color: grey;
+}
+
+.logo-container {
+  text-align: center;
+}
+
+.logo-container img {
+  max-width: 150px; 
+  display: block;
+  margin: 0 auto; /* Center the image horizontally */
+}
+
+.title-text {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between; /* Space between the left and right sides */
+  width: 95%;
+  max-width: 1200px;
+  background-color: transparent;
+}
+
+.box {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-right: 20px; 
+  background-color: #aed4e6; 
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
   
   .left-half {
     background-color: white;
@@ -20,3 +70,74 @@
     justify-content: center;
     align-items: center;
   }
+  
+  .pantry {
+    background-color: white;
+    width: 100%;
+  }
+
+  button {
+    width: 40%;
+    padding: 6px;
+    background-color: #1B264E; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-top: 20px;
+    cursor: pointer;
+    margin-left: 100px;
+}
+
+button:hover {
+  background-color: #14203B;
+}
+
+.pantryimage {
+  max-width: 150px; 
+  display: block;
+  margin: 0 auto; /* Center the image horizontally */
+}
+
+.info {
+  width: 20%;
+  padding: 6px;
+  background-color: darkgray; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-top: 20px;
+  cursor: pointer;
+  margin-left: 135px;
+  margin-bottom: 20px;
+}
+
+.info:hover {
+  background-color: grey;
+}
+
+.close {
+  width: 20%;
+  padding: 6px;
+  background-color: red; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-top: 20px;
+  cursor: pointer;
+  margin-left: 135px;
+  margin-bottom: 20px;
+}
+
+.close:hover {
+  background-color: darkred;
+}
+
+
+.information {
+  background-color: white;
+  width: 100%;
+  display: none;
+}
