@@ -8,13 +8,14 @@ body {
     justify-content: flex-start;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0; /* Light grey background */
+    background-color: #101827; 
 }
 /* Welcome header & subheader */
 .welcome-text {
     text-align: left;
     margin-bottom: 20px;
     margin-left: 15px;
+    color: #d1d5db;
 }
 
 .welcome-text h1 {
@@ -24,13 +25,29 @@ body {
 .welcome-text h2 {
     font-size: 18px;
 }
+.table-container {
+  padding: 20px;
+  margin-left: 20px;
+    margin-right: 20px; 
+    background-color: #4e8f58;
+    border-radius: 40px;
+    width: 90%;
+    height: 80vh;
+    justify-content: center;
+
+}
 table, th, td {
     border: 1px solid;
     border-collapse: collapse;
     width: 90%;
+    length: 90%;
+    color: black;
+    background-color: white;
+
+
   }
 .topnav {
-    background-color: #333;
+    background-color: #4e8f58;
     overflow: hidden;
     width: 100%
 }
@@ -46,12 +63,12 @@ table, th, td {
   
   /* Change the color of links on hover */
 .topnav a:hover {
-    background-color: #aed4e6;
-    color: black;
+    background-color: #101827;
+    color: white;
   }
   
   /* Add a color to the active/current link */
 .topnav a.active {
-    background-color: #1B264E;
+    background-color: #101827;
     color: white;
   }
