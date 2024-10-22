@@ -8,19 +8,33 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0; /* Light grey background */
+    background-color: #101827; /* Light grey background */
 }
 
-/* Centered image/logo at the top */
-.logo-container {
-    text-align: center;
+
+
+.registerpasswordrow{
+    display: flex;
+    justify-content: space-around;
+}
+
+.welcome-message{
+    font-size: 64px;
+}
+
+.logowelcome{
+    display: flex;
+    padding-left: 50px;
 }
 
 .logo-container img {
+        display: flex;
+        justify-content: end;
+        align-items: end;
     max-width: 150px; 
     display: block;
-    margin: 0 auto; /* Center the image horizontally */
 }
+
 
 /* Welcome header & subheader */
 .welcome-text {
@@ -34,40 +48,41 @@ body {
 
 .welcome-text h2 {
     font-size: 18px;
+    color: #d1d5db;
+}
+
+.signcreatebox{
+    color: black;
+}
+
+.userinput{
+    display: flex;
+    flex-direction: column;
 }
 
 /* Container for both forms (Sign Up and Sign In) */
 .container {
     display: flex;
     justify-content: space-between; /* Space between the left and right sides */
-    width: 95%;
+    width: 60%;
     max-width: 1200px;
     background-color: transparent;
 }
 
 /* Sign UP */
-.left-side {
+.center {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
     margin-right: 20px; 
-    background-color: #aed4e6; 
+    background-color: #4e8f58; 
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 40px;
 }
 
 /* Sign IN */
-.right-side {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    margin-left: 20px; 
-    background-color: #aed4e6; 
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-}
 
 /* Form container styling (common for both forms) */
 .form {
@@ -82,7 +97,8 @@ body {
 /* Headings */
 h1 {
     font-size: 24px;
-    color: #333;
+    color: #d1d5db;
+    text-align: center;
     margin-bottom: 15px;
 }
 
@@ -90,15 +106,15 @@ h1 {
 span {
     display: block;
     font-size: 14px;
-    color: #666;
+    color: #d1d5db;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 /* Input field styles */
-input[type="name"],
-input[type="email"],
+input[type="text"],
 input[type="password"] {
-    width: 100%;
+    width: 22rem;
     padding: 12px;
     margin: 8px 0;
     border-radius: 5px;
@@ -120,7 +136,7 @@ button {
 }
 
 button:hover {
-    background-color: #14203B;
+    background-color: #1e65a7;
 }
 
 /* Forgot password link */
@@ -130,9 +146,10 @@ a {
     color: #1B264E;
     text-decoration: none;
     font-size: 14px;
+    text-align: center;
 }
 
 a:hover {
     text-decoration: underline;
+    color: #1e65a7;
 }
-
