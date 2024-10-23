@@ -6,7 +6,6 @@ body {
     display: flex;
     flex-direction: column; /* Stack elements vertically */
     justify-content: flex-start;
-    align-items: center;
     height: 100vh;
     background-color: #101827; 
 }
@@ -18,13 +17,22 @@ body {
     color: #d1d5db;
 }
 
+.foodimage {
+  max-width: 150px; 
+  display: block;
+  size: 30px 30px;
+  margin: 0 auto; /* Center the image horizontally */
+}
+
 .welcome-text h1 {
-    font-size: 36px;
+    font-size: 46px;
+    text-align: left;
 }
 
 .welcome-text h2 {
-    font-size: 18px;
+    font-size: 24px;
 }
+
 .table-container {
   padding: 20px;
   margin-left: 20px;
@@ -33,19 +41,45 @@ body {
     border-radius: 40px;
     width: 90%;
     height: 80vh;
-    justify-content: center;
-
 }
+
 table, th, td {
-    border: 1px solid;
     border-collapse: collapse;
-    width: 90%;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     length: 90%;
     color: black;
-    background-color: white;
-
-
+    padding: 12px 15px;
+    font-size: 18px;
   }
+
+th {
+  background-color: #101827; 
+  color: white;
+}
+td{
+  text-align: center;
+}
+
+tr:nth-of-type(even) {
+  background-color: #d7d6d6;
+}
+tr:nth-of-type(odd) {
+  background-color: #f2f2f2;
+}
+tr:hover td {
+  font-weight: bold;
+  background-color: #def7e1; 
+}
+
+table {
+  border-radius: 20px;
+  margin-right: 20px;
+}
+
 .topnav {
     background-color: #4e8f58;
     overflow: hidden;

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Items</title>
+    <title>Item Browser</title>
     <link rel="stylesheet" href="../CSS/my-items.css">
 </head>
 <div class="topnav">
@@ -11,26 +11,36 @@
     <a href="./dashboard.html">Dashboard</a>
     <a href="./item-browser.html">Item Browser</a>
     <a class="active" href="./my-items.html">My Items</a>
-</div>
+  </div>
 <body>
     <div class="welcome-text">
         <h1>My Items</h1>
+        <h2> </h2>
+
     </div>
-    <table>
-        <tr>
-          <th>Item</th>
-          <th>In Stock: </th>
-          <th>Last Stocked Date: </th>
-        </tr>
-        <tr>
-          <td>Banana</td>
-          <td>0</td>
-          <td>01/05/2023</td>
-        </tr>
-        <tr>
-          <td>Yogurt</td>
-          <td>100</td>
-          <td>01/05/2024</td>
-        </tr>
-      </table>
+    <div class="table-container">
+      <table>
+          <tr>
+            <th>Item</th>
+            <th>In Stock: </th>
+            <th>Last Stocked Date: </th>
+          </tr>
+          <tr>
+            <td>
+              <img class="foodimage" src="../Images/new_logo.png" alt="Food Image">
+              Banana
+            </td>
+            <td>0</td>
+            <td>01/05/2023</td>
+          </tr>
+          <tr>
+            <td>
+              <img class="foodimage" src="../Images/new_logo.png" alt="Food Image">
+              Yogurt
+            </td>
+            <td>100</td>
+            <td>01/05/2024</td>
+          </tr>
+        </table>
+    </div>
 </body>
