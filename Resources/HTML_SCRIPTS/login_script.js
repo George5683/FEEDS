@@ -25,7 +25,7 @@ SignInButton.onclick = async function(event) {
         if (response.ok) {
           alert('User signed in successfully!');
         } else {
-          alert('Error signing in');
+          alert('Error signing into account. Please check your email and password and try again.');
         }
       } catch (error) {
         console.error('Error:', error);

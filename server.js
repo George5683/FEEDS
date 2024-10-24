@@ -201,11 +201,11 @@ app.post('/SignInUser', async (req, res) => {
     if (userVerified) {
       res.send('User signed in successfully!');
     } else {
-      res.status(401).send('Error signing in');
+      res.status(401).send('Error signing into account. Please check your email and password.');
     }
   } catch (error) {
     console.error('Error signing in:', error);
-    res.status(500).send('Error signing in');
+    res.status(500).send('Error signing into account.');
   }
 });
 
@@ -219,7 +219,7 @@ app.post('/SignInUser', async (req, res) => {
 // Main function to initialize the server
 async function main() {
   setupServer();
-  add_user('test', 'password', 'name', '32607', 'test@gmail.com');
+
   
 
   // Start the server
