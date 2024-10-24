@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="../CSS/item-browser.css">
 </head>
 <div class="topnav">
-  <!-- Change href so that they redirect to their respective pages -->
     <a href="./dashboard.html">Dashboard</a>
     <a class="active" href="./item-browser.html">Item Browser</a>
     <a href="./my-items.html">My Items</a>
@@ -25,22 +24,31 @@
             <th>In Stock: </th>
             <th>Last Stocked Date: </th>
           </tr>
-          <tr>
+          <tr onclick="showPopup('Banana', 'IN STOCK', '01/05/2023')">
             <td>
               <img class="foodimage" src="../Images/new_logo.png" alt="Food Image">
               Banana
             </td>
-            <td>0</td>
+            <td>IN STOCK</td>
             <td>01/05/2023</td>
           </tr>
-          <tr>
+          <tr onclick="showPopup('Yogurt', 'LOW STOCK', '01/05/2024')">
             <td>
               <img class="foodimage" src="../Images/new_logo.png" alt="Food Image">
               Yogurt
             </td>
-            <td>100</td>
+            <td>LOW STOCK</td>
             <td>01/05/2024</td>
           </tr>
         </table>
     </div>
+    <div id="popupModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="itemName"></h2>
+        <p>In Stock: <span id="itemStock"></span></p>
+        <p>Last Stocked Date: <span id="itemDate"></span></p>
+      </div>
+    </div>
+    <script src="/Source/item_table_script.js"></script>
 </body>
