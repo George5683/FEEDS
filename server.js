@@ -50,7 +50,7 @@ async function deleteUser(username) {
       port: 3306                        // Default MySQL port
     });
 
-    await connection.execute('DELETE FROM users WHERE username = ?', [username]);
+    await connection.execute('DELETE FROM USER_INFO WHERE username = ?', [username]);
 
     await connection.end();
     console.log('User deleted successfully!');
@@ -192,6 +192,7 @@ app.post('/SignInUser', async (req, res) => {
 // Main function to initialize the server
 async function main() {
   setupServer();
+  
 
   // Start the server
   app.listen(PORT, () => {
