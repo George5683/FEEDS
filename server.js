@@ -47,7 +47,7 @@ async function add_user(username, password, name, zip_code, email) {
       port: 3306                        // Default MySQL port
     });
 
-    await connection.execute(
+    await connection.query(
       'INSERT INTO USER_INFO (username, password, name, zip_code, email) VALUES (?, ?, ?, ?, ?)',
       [username, password, name, zip_code, email]
     );
@@ -135,7 +135,7 @@ async function InsertNewPantry(username, password, name, zip_code, pantry_id) {
       port: 3306                        // Default MySQL port
     });
 
-    await connection.execute(
+    await connection.query(
       'INSERT INTO PANTRY_INFO (username, password, name, zip_code, pantry_id) VALUES (?, ?, ?, ?, ?)',
       [username, password, name, zip_code, pantry_id]
     );
@@ -160,7 +160,7 @@ async function CreateNewPantryTable(NEW_PANTRY_NAME) {
     });
 
     // Create the new pantry table
-    await connection.execute(
+    await connection.query(
       `CREATE TABLE ${NEW_PANTRY_NAME} (
         FOOD_ID INT AUTO_INCREMENT PRIMARY KEY,
         FOOD_NAME VARCHAR(255) NOT NULL,
@@ -219,6 +219,7 @@ app.post('/SignInUser', async (req, res) => {
 // Main function to initialize the server
 async function main() {
   setupServer();
+  add_user('test', 'password', 'name', '32607', 'test@gmail.com');
   
 
   // Start the server
