@@ -10,9 +10,9 @@
 }
 
 .topnav {
-  background-color: #333;
+  background-color: #4e8f58;
   overflow: hidden;
-  width: 100%
+  width: 100%;
 }
 /* Style the links inside the navigation bar */
 .topnav a {
@@ -26,13 +26,20 @@
 
 /* Change the color of links on hover */
 .topnav a:hover {
-  background-color: #4e8f58;
-  color: black;
+  background-color: #101827;
+  color: white;
 }
 
 /* Add a color to the active/current link */
 .topnav a.active {
-  background-color: darkgreen;
+  background-color: #101827;
+  color: white;
+}
+
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #101827;
   color: white;
 }
 
