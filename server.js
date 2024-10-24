@@ -14,6 +14,11 @@ function setupServer() {
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'login.html'));
   });
+
+  // Service the register.html file
+  app.get('/register', (req, res) =>
+    res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'register.html'))
+  );
 }
 
 // Function to add a user
@@ -63,7 +68,7 @@ async function deleteUser(username) {
 
 
 //TODO: Function to verify if user is in database 
-async function verifyUser(username, password) {
+async function verifyUser(email, password) {
   try {
     const connection = await mysql.createConnection({
       host: 'sql5.freesqldatabase.com', // Remote database
@@ -74,7 +79,7 @@ async function verifyUser(username, password) {
     });
 
     const [rows] = await connection.execute(
-      'SELECT * FROM USER_INFO WHERE username = ? AND password = ?',
+      'SELECT * FROM USER_INFO WHERE email = ? AND password = ?',
       [username, password]
     );
 
@@ -168,9 +173,9 @@ app.post('/SignUpUser', async (req, res) => {
 
 //TODO: Routing for the username and password from the login page sign in
 app.post('/SignInUser', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const userVerified = await verifyUser(username, password);
+    const userVerified = await verifyUser(email, password);
     if (userVerified) {
       res.send('User signed in successfully!');
     } else {

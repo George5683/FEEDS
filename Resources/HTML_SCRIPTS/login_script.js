@@ -8,14 +8,14 @@ let SignUpButton = document.getElementById("SignUpButton");
 // OnClick Function for the Sign in Button
 SignInButton.onclick = async function(event) {
 
-    let username = document.getElementById("email-sign-in").value;
+    let email = document.getElementById("email-sign-in").value;
     let password = document.getElementById("password-sign-in").value;
     
-    let data = { username, password };
+    let data = { email, password };
 
     try {
         const response = await fetch('/SignInUser', {
-          method: 'GET',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
