@@ -11,8 +11,9 @@
 
 .topnav {
   background-color: #4e8f58;
+  background-color: #4e8f58;
   overflow: hidden;
-  width: 100%
+  width: 100%;
 }
 /* Style the links inside the navigation bar */
 .topnav a {
@@ -26,6 +27,8 @@
 
 /* Change the color of links on hover */
 .topnav a:hover {
+  background-color: #101827;
+  color: white;
   background-color: #101827;
   color: white;
 }
