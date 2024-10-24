@@ -1,8 +1,12 @@
 const express = require('express');
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 const path = require('path');
 const app = express();
 const PORT = 8005;
+
+// Middleware to parse JSON and URL-encoded bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Function to set up middleware and routes
 function setupServer() {
@@ -19,6 +23,17 @@ function setupServer() {
   app.get('/register', (req, res) =>
     res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'register.html'))
   );
+
+  // Service the dashboard.html file
+  app.get('/dashboard', (req, res) =>
+    res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'dashboard.html'))
+  );
+
+  // Service the my-item.html file
+  app.get('/my-item', (req, res) =>
+    res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'my-item.html'))
+  );
+
 }
 
 // Function to add a user
@@ -78,22 +93,29 @@ async function verifyUser(email, password) {
       port: 3306                        // Default MySQL port
     });
 
-    const [rows] = await connection.execute(
-      'SELECT * FROM USER_INFO WHERE email = ? AND password = ?',
-      [username, password]
+    console.log('Verifying user...');
+    console.log('Email Entered: '+ email);
+    console.log('Password Entered: '+ password);
+
+    const [results, fields] = await connection.query(
+      'SELECT * FROM USER_INFO WHERE EMAIL = ? AND PASSWORD = ?',
+      [email, password]
     );
 
-    await connection.end();
+    console.log('Fields:', fields);
+    console.log('Rows:', results);
 
-    if (rows.length > 0) {
+    if (results.length > 0) {
       console.log('User verified successfully!');
       return true;
-    } else {
+    } 
+    else {
       console.log('User not found!');
       return false;
     }
-  } catch (error) {
-    console.error('Error verifying user:', error);
+  } 
+  catch (error) {
+    console.error('Error verifying user on Server Side:', error);
     return false;
   }
 }
