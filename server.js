@@ -4,6 +4,9 @@ const path = require('path');
 const app = express();
 const PORT = 8005;
 
+// Global variable to store the current user's information
+let CurrentInfo;
+
 // Middleware to parse JSON and URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -102,8 +105,18 @@ async function verifyUser(email, password) {
       [email, password]
     );
 
-    console.log('Fields:', fields);
+    //console.log('Fields:', fields);
     console.log('Rows:', results);
+
+    // Changing the Name to always have the first character be capitalized
+    if (results.length > 0) {
+      let name = results[0].NAME;
+      name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+      results[0].NAME = name;
+    }
+    
+    // Set the user info
+    SetUserInfo(results);
 
     if (results.length > 0) {
       console.log('User verified successfully!');
@@ -198,10 +211,16 @@ app.post('/SignInUser', async (req, res) => {
   const { email, password } = req.body;
   try {
     const userVerified = await verifyUser(email, password);
+    
     if (userVerified) {
-      res.send('User signed in successfully!');
+      let info = await GetUserInfo();
+
+      console.log('User Info:', info);
+      console.log('User Info Name:', info[0].NAME);
+
+      res.json({ name: info[0].NAME });
     } else {
-      res.status(401).send('Error signing into account. Please check your email and password.');
+      res.status(401).send('Not authorized to sign in');
     }
   } catch (error) {
     console.error('Error signing in:', error);
@@ -209,6 +228,17 @@ app.post('/SignInUser', async (req, res) => {
   }
 });
 
+// Function to get the user info of the current user
+async function GetUserInfo(){
+  let info = CurrentInfo;
+  return info;
+}
+
+// Function to set the user info of the current user
+async function SetUserInfo(info){
+  CurrentInfo = info;
+  return;
+}
 
 // __________________________Routing for the dashboard htmls_________________________________________________________________________________
 

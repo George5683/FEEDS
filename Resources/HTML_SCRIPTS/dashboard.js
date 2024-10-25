@@ -1,3 +1,4 @@
+const dashboard_title = document.getElementById('dashboard-title');
 
 const infoButton1 = document.getElementById('pantry1I');
 const closeButton1 = document.getElementById('close1');
@@ -28,6 +29,15 @@ const infoButton6 = document.getElementById('pantry6I');
 const closeButton6 = document.getElementById('close6');
 const pan6 = document.getElementById('p6');
 const info6 = document.getElementById('i6');
+
+// Get the query parameter from the URL
+const urlParams = new URLSearchParams(window.location.search);
+const UsersName = urlParams.get('name');
+
+// If we have the name, set it in the HTML
+if (UsersName) {
+    dashboard_title.textContent = `Welcome ${UsersName}`; // Set the title dynamically
+}
 
 
 infoButton1.addEventListener("click", function(){
