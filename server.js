@@ -102,8 +102,8 @@ async function verifyUser(email, password) {
       [email, password]
     );
 
-    console.log('Fields:', fields);
-    console.log('Rows:', results);
+    //console.log('Fields:', fields);
+    //console.log('Rows:', results);
 
     if (results.length > 0) {
       console.log('User verified successfully!');
@@ -201,7 +201,7 @@ app.post('/SignInUser', async (req, res) => {
     if (userVerified) {
       res.send('User signed in successfully!');
     } else {
-      res.status(401).send('Error signing into account. Please check your email and password.');
+      res.status(401).send('Not authorized to sign in');
     }
   } catch (error) {
     console.error('Error signing in:', error);
