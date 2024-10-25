@@ -138,7 +138,7 @@ async function verifyUser(email, password) {
 
 
 // Function to Insert Pantries into PANTRY_INFO Table
-async function InsertNewPantry(username, password, name, zip_code, pantry_id) {
+async function InsertNewPantry(username, password, name, zip_code, email) {
   try {
     const connection = await mysql.createConnection({
       host: 'sql5.freesqldatabase.com', // Remote database host
@@ -149,8 +149,8 @@ async function InsertNewPantry(username, password, name, zip_code, pantry_id) {
     });
 
     await connection.query(
-      'INSERT INTO PANTRY_INFO (username, password, name, zip_code, pantry_id) VALUES (?, ?, ?, ?, ?)',
-      [username, password, name, zip_code, pantry_id]
+      'INSERT INTO PANTRY_INFO (username, password, name, zip_code, email) VALUES (?, ?, ?, ?, ?)',
+      [username, password, name, zip_code, email]
     );
 
     await connection.end();
@@ -199,8 +199,15 @@ app.post('/SignUpUser', async (req, res) => {
   const { username, password, name, zip_code, email } = req.body;
   try {
     await add_user(username, password, name, zip_code, email);
-    res.send('User added successfully!');
-  } catch (error) {
+    let jsonReponse = {
+      username: username,
+      name: name,
+      zip_code: zip_code,
+      email: email
+    };
+    res.json(jsonReponse);
+  } 
+  catch (error) {
     console.error('Error adding user:', error);
     res.status(500).send('Error adding user');
   }
@@ -250,7 +257,6 @@ async function SetUserInfo(info){
 async function main() {
   setupServer();
 
-  
 
   // Start the server
   app.listen(PORT, () => {
