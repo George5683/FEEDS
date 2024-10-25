@@ -22,14 +22,14 @@ SignInButton.onclick = async function(event) {
           body: JSON.stringify(data),
         });
 
-        const responseData = await response.text();
+        const responseData = await response.json();
     
         if (response.ok) {
-          console.log("Response is: ", + responseData);
+          console.log("Response is: " + JSON.stringify(responseData));
           alert('User signed in successfully!');
-          window.location.href = '/dashboard';
+          // Sending the user to the dashboard page with dynamic name
+          window.location.href = `/dashboard?name=${encodeURIComponent(responseData.name)}`;
         } else {
-          console.log("Response is: ", + responseData);
           alert('Error signing into account. Please check your email and password and try again.');
         }
       } catch (error) {
