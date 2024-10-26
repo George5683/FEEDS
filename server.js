@@ -37,6 +37,11 @@ function setupServer() {
     res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'my-item.html'))
   );
 
+  // Service the my-item.html file
+  app.get('/item-browser', (req, res) =>
+    res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'item-browser.html'))
+  );
+
 }
 
 // Function to add a user
