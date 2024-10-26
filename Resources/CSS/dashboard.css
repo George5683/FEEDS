@@ -1,4 +1,4 @@
-  body {
+body {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
@@ -11,10 +11,10 @@
 
 .topnav {
   background-color: #4e8f58;
-  background-color: #4e8f58;
   overflow: hidden;
   width: 100%;
 }
+
 /* Style the links inside the navigation bar */
 .topnav a {
   float: left;
@@ -29,8 +29,6 @@
 .topnav a:hover {
   background-color: #101827;
   color: white;
-  background-color: #101827;
-  color: white;
 }
 
 /* Add a color to the active/current link */
@@ -40,7 +38,7 @@
 }
 
 h1 {
-  color: white
+  color: white;
 }
 
 h2 {
@@ -48,7 +46,7 @@ h2 {
 }
 
 h3 {
-  color: white
+  color: white;
 }
 
 h4 {
@@ -73,41 +71,41 @@ h4 {
 }
 
 .container {
-  display: flex;
-  justify-content: space-between; /* Space between the left and right sides */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  gap: 20px; /* Space between boxes */
   width: 95%;
   max-width: 1200px;
   background-color: transparent;
 }
 
 .box {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
-  margin-right: 20px; 
   background-color: #4e8f58;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 40px;
 }
-  .pantry {
-    background-color: white;
-    width: 100%;
-    border-radius: 40px;
-  }
 
-  button {
-    width: 40%;
-    padding: 6px;
-    background-color: darkgreen; 
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
-    margin-top: 20px;
-    cursor: pointer;
-    margin-left: 100px;
+.pantry {
+  background-color: white;
+  width: 100%;
+  border-radius: 40px;
+}
+
+button {
+  width: 40%;
+  padding: 6px;
+  background-color: darkgreen; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-top: 20px;
+  cursor: pointer;
+  margin-left: 100px;
 }
 
 button:hover {
@@ -156,9 +154,21 @@ button:hover {
   background-color: darkred;
 }
 
-
 .information {
   background-color: white;
   width: 100%;
   display: none;
+}
+
+/* Responsive design */
+@media (max-width: 800px) {
+  .container {
+      grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+      grid-template-columns: 1fr; /* 1 column on very small screens */
+  }
 }

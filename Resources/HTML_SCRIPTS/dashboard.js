@@ -1,95 +1,99 @@
 const dashboard_title = document.getElementById('dashboard-title');
-
-const infoButton1 = document.getElementById('pantry1I');
-const closeButton1 = document.getElementById('close1');
-const pan1 = document.getElementById('p1');
-const info1 = document.getElementById('i1');
-
-const infoButton2 = document.getElementById('pantry2I');
-const closeButton2 = document.getElementById('close2');
-const pan2 = document.getElementById('p2');
-const info2 = document.getElementById('i2');
-
-const infoButton3 = document.getElementById('pantry3I');
-const closeButton3 = document.getElementById('close3');
-const pan3 = document.getElementById('p3');
-const info3 = document.getElementById('i3');
-
-const infoButton4 = document.getElementById('pantry4I');
-const closeButton4 = document.getElementById('close4');
-const pan4 = document.getElementById('p4');
-const info4 = document.getElementById('i4');
-
-const infoButton5 = document.getElementById('pantry5I');
-const closeButton5 = document.getElementById('close5');
-const pan5 = document.getElementById('p5');
-const info5 = document.getElementById('i5');
-
-const infoButton6 = document.getElementById('pantry6I');
-const closeButton6 = document.getElementById('close6');
-const pan6 = document.getElementById('p6');
-const info6 = document.getElementById('i6');
+const container = document.querySelector('.container'); // Container where pantries are displayed
 
 // Get the query parameter from the URL
 const urlParams = new URLSearchParams(window.location.search);
 const UsersName = urlParams.get('name');
 
-// If we have the name, set it in the HTML
-if (UsersName) {
-    dashboard_title.textContent = `Welcome ${UsersName}`; // Set the title dynamically
+async function main() {
+  if (UsersName) {
+      dashboard_title.textContent = `Welcome ${UsersName}`;
+  }
+
+  try {
+      const response = await fetch('/GetPantryInfo', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          }
+      });
+      
+      const pantries = await response.json();
+
+      if (response.ok) {
+          pantries.forEach((pantry, index) => {
+              const box = document.createElement('div');
+              box.classList.add('box');
+
+              // Pantry Container
+              const pantryDiv = document.createElement('div');
+              pantryDiv.classList.add('pantry');
+              pantryDiv.id = `p${index + 1}`;
+              
+              const title = document.createElement('h2');
+              title.textContent = pantry.NAME;
+
+              const image = document.createElement('img');
+              image.classList.add('pantryimage');
+              image.src = '../Images/new_logo.png';
+              image.alt = `${pantry.NAME} Image`;
+
+              const selectButton = document.createElement('a');
+              selectButton.href = './item-browser.html';
+              selectButton.innerHTML = '<button>Select</button>';
+              
+              const infoButton = document.createElement('button');
+              infoButton.classList.add('info');
+              infoButton.id = `pantry${index + 1}I`;
+              infoButton.textContent = 'Info';
+
+              // Add event listener for info button
+              infoButton.addEventListener('click', () => {
+                  pantryDiv.style.display = 'none';
+                  infoDiv.style.display = 'unset';
+              });
+
+              pantryDiv.append(title, image, selectButton, infoButton);
+
+              // Information Container
+              const infoDiv = document.createElement('div');
+              infoDiv.classList.add('information');
+              infoDiv.id = `i${index + 1}`;
+              infoDiv.style.display = 'none'; // Hide initially
+
+              const infoTitle = document.createElement('h2');
+              infoTitle.textContent = pantry.NAME;
+
+              const address = document.createElement('h4');
+              address.textContent = pantry.ADDRESS;
+
+              const zipcode = document.createElement('h4');
+              zipcode.textContent = pantry.ZIP_CODE;
+
+              const closeButton = document.createElement('button');
+              closeButton.classList.add('close');
+              closeButton.id = `close${index + 1}`;
+              closeButton.textContent = 'Close';
+
+              // Add event listener for close button
+              closeButton.addEventListener('click', () => {
+                  pantryDiv.style.display = 'unset';
+                  infoDiv.style.display = 'none';
+              });
+
+              infoDiv.append(infoTitle, address, zipcode, closeButton);
+
+              // Append both pantry and information divs to the box
+              box.append(pantryDiv, infoDiv);
+              container.appendChild(box);
+          });
+      } else {
+          console.error("Failed to fetch pantry information");
+      }
+  } catch (error) {
+      console.error('Error:', error);
+      alert('Error retrieving pantry information from server.');
+  }
 }
 
-
-infoButton1.addEventListener("click", function(){
-    pan1.style.display = "none";
-    info1.style.display = "unset";
-})
-closeButton1.addEventListener("click", function(){
-  pan1.style.display = "unset";
-  info1.style.display = "none";
-})
-
-infoButton2.addEventListener("click", function(){
-  pan2.style.display = "none";
-  info2.style.display = "unset";
-})
-closeButton2.addEventListener("click", function(){
-pan2.style.display = "unset";
-info2.style.display = "none";
-})
-
-infoButton3.addEventListener("click", function(){
-  pan3.style.display = "none";
-  info3.style.display = "unset";
-})
-closeButton3.addEventListener("click", function(){
-pan3.style.display = "unset";
-info3.style.display = "none";
-})
-
-infoButton4.addEventListener("click", function(){
-  pan4.style.display = "none";
-  info4.style.display = "unset";
-})
-closeButton4.addEventListener("click", function(){
-pan4.style.display = "unset";
-info4.style.display = "none";
-})
-
-infoButton5.addEventListener("click", function(){
-  pan5.style.display = "none";
-  info5.style.display = "unset";
-})
-closeButton5.addEventListener("click", function(){
-pan5.style.display = "unset";
-info5.style.display = "none";
-})
-
-infoButton6.addEventListener("click", function(){
-  pan6.style.display = "none";
-  info6.style.display = "unset";
-})
-closeButton6.addEventListener("click", function(){
-pan6.style.display = "unset";
-info6.style.display = "none";
-})
+main();

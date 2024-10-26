@@ -138,7 +138,7 @@ async function verifyUser(email, password) {
 
 
 // Function to Insert Pantries into PANTRY_INFO Table
-async function InsertNewPantry(username, password, name, zip_code, email) {
+async function InsertNewPantry(username, password, name, zip_code, email, address) {
   try {
     const connection = await mysql.createConnection({
       host: 'sql5.freesqldatabase.com', // Remote database host
@@ -149,8 +149,8 @@ async function InsertNewPantry(username, password, name, zip_code, email) {
     });
 
     await connection.query(
-      'INSERT INTO PANTRY_INFO (username, password, name, zip_code, email) VALUES (?, ?, ?, ?, ?)',
-      [username, password, name, zip_code, email]
+      'INSERT INTO PANTRY_INFO (username, password, name, zip_code, email, address) VALUES (?, ?, ?, ?, ?, ?)',
+      [username, password, name, zip_code, email, address]
     );
 
     await connection.end();
@@ -187,6 +187,38 @@ async function CreateNewPantryTable(NEW_PANTRY_NAME) {
     console.log(`Table ${NEW_PANTRY_NAME} created successfully!`);
   } catch (error) {
     console.error('Error creating new pantry table:', error);
+  }
+}
+
+async function getPantryInfo(){
+  try {
+    const connection = await mysql.createConnection({
+      host: 'sql5.freesqldatabase.com', // Remote database
+      user: 'sql5738700',               // Database username
+      password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
+      database: 'sql5738700',           // The database name
+      port: 3306                        // Default MySQL port
+    });
+
+    console.log('Getting pantry info...');
+
+    const [results, fields] = await connection.query('SELECT * FROM PANTRY_INFO');
+
+    //console.log('Fields:', fields);
+    //console.log('Info:', results);
+
+    if (results.length > 0) {
+      console.log('Pantry info gotten successfully!');
+      return results;
+    } 
+    else {
+      console.log('Pantry info not found!');
+      return null;
+    }
+  } 
+  catch (error) {
+    console.error('Error getting pantry info on Server Side:', error);
+    return null;
   }
 }
 
@@ -251,12 +283,20 @@ async function SetUserInfo(info){
 
 //TODO: ROuting for a user to add something to favorites list
 
+// Routing to get the pantry information to the dashboard
+app.post('/GetPantryInfo', async (req, res) => {
+  let info = await getPantryInfo();
+
+  res.json(info);
+});
+
 // ______________________Functions Above__________________________________________________________________________
 
 // Main function to initialize the server
 async function main() {
   setupServer();
 
+  
 
   // Start the server
   app.listen(PORT, () => {
