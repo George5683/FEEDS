@@ -33,8 +33,8 @@ function setupServer() {
   );
 
   // Service the my-item.html file
-  app.get('/my-item', (req, res) =>
-    res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'my-item.html'))
+  app.get('/my-items', (req, res) =>
+    res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'my-items.html'))
   );
 
   // Service the my-item.html file
