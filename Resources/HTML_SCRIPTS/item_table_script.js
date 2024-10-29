@@ -1,7 +1,24 @@
+async function main(){
+  let PantryNamePlaceHolder = document.getElementById("PantryNamePlaceHolder");  
+  // Get the query parameter from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const pantryName = urlParams.get('pantryName');
+
+  // Use the pantryName value
+  if (pantryName) {
+      console.log(`Selected Pantry: ${pantryName}`);
+      // Display the pantry name or use it in your logic
+      if (PantryNamePlaceHolder) {
+          PantryNamePlaceHolder.textContent = `Pantry: ${pantryName}`;
+      }
+  } else {
+      console.error('Pantry name not found in the URL.');
+  }
+}
+
 function showPopup(itemName, itemStock, itemDate) {
     // Get the modal
-    let modal = document.getElementById("popupModal");
-    // display the modal
+    let modal = document.getElementById("popupModal");    // display the modal
     modal.style.display = "block";
     // populate the modal with the item information
     document.getElementById("itemName").textContent = itemName;
@@ -20,4 +37,8 @@ function showPopup(itemName, itemStock, itemDate) {
       modal.style.display = "none";
     }
   }
+
+
+
+  main();
   

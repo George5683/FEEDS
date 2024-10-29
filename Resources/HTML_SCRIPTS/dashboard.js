@@ -39,7 +39,7 @@ async function main() {
               image.alt = `${pantry.NAME} Image`;
 
               const selectButton = document.createElement('a');
-              selectButton.href = './item-browser.html';
+              selectButton.href = `./item-browser?pantryName=${encodeURIComponent(pantry.NAME)}`;
               selectButton.innerHTML = '<button>Select</button>';
               
               const infoButton = document.createElement('button');
