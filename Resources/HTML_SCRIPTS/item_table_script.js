@@ -1,5 +1,6 @@
 async function main(){
   let PantryNamePlaceHolder = document.getElementById("PantryNamePlaceHolder");  
+  
   // Get the query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
   const pantryName = urlParams.get('pantryName');

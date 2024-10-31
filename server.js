@@ -138,10 +138,6 @@ async function verifyUser(email, password) {
   }
 }
 
-
-//TODO: Function to update pantry information
-
-
 // Function to Insert Pantries into PANTRY_INFO Table
 async function InsertNewPantry(username, password, name, zip_code, email, address) {
   try {
@@ -195,7 +191,8 @@ async function CreateNewPantryTable(NEW_PANTRY_NAME) {
   }
 }
 
-async function getPantryInfo(){
+// Function to get all the pantry informations from the database
+async function getallPantryInfo(){
   try {
     const connection = await mysql.createConnection({
       host: 'sql5.freesqldatabase.com', // Remote database
@@ -228,6 +225,21 @@ async function getPantryInfo(){
 }
 
 //TODO: Function to add food items to a pantry table
+async function AdditemtoPantry(pantryName, foodName, status) {
+
+}
+
+//TODO: Function to indicate a pantry is out of this item
+async function OutofItem(pantryName, foodName) {
+}
+
+//TODO: Function to indicate a pantry is low on this item
+async function LowonItem(pantryName, foodName) {
+}
+
+//TODO: Function to indicate a pantry is high on this item
+async function HighonItem(pantryName, foodName) {
+}
 
 // __________________________Routing for the login htmls_________________________________________________________________________________
 
@@ -272,6 +284,14 @@ app.post('/SignInUser', async (req, res) => {
   }
 });
 
+// Routing to get the user info of the current user
+app.post('/GetUserInfo', async (req, res) => {
+  let info = await GetUserInfo();
+  res.json(info);
+  }
+);
+
+
 // Function to get the user info of the current user
 async function GetUserInfo(){
   let info = CurrentInfo;
@@ -284,16 +304,59 @@ async function SetUserInfo(info){
   return;
 }
 
-// __________________________Routing for the dashboard htmls_________________________________________________________________________________
+// __________________________Routing for the dashboard html_________________________________________________________________________________
 
 //TODO: ROuting for a user to add something to favorites list
 
 // Routing to get the pantry information to the dashboard
 app.post('/GetPantryInfo', async (req, res) => {
-  let info = await getPantryInfo();
+  let info = await getallPantryInfo();
 
   res.json(info);
 });
+
+// __________________________Routing for the item brower html_________________________________________________________________________________
+
+app.post('/GetPantryItems', async (req, res) => {
+  // getting the info from the pantry database
+  let info = await getPantrySpecificItems(req.body.pantryName);
+
+  res.json(info);
+});
+
+// Function to get the items from a specific pantry
+async function getPantrySpecificItems(pantryName){
+  try {
+    const connection = await mysql.createConnection({
+      host: 'sql5.freesqldatabase.com', // Remote database
+      user: 'sql5738700',               // Database username
+      password: 'esGA72UD9Z',        // Database password (replace 'your_password' with the actual password)
+      database: 'sql5738700',           // The database name
+      port: 3306                        // Default MySQL port
+    });
+
+    console.log('Getting pantry items from selected pantry...');
+    console.log('Pantry Selcted:', pantryName);
+
+    const [results, fields] = await connection.query(`SELECT * FROM ${pantryName}`);
+
+    //console.log('Fields:', fields);
+    console.log('Items within ' + pantryName +': ', results);
+
+    if (results.length > 0) {
+      console.log('Pantry items for '+ pantryName + ' gotten successfully!');
+      return results;
+    }
+    else {
+      console.log('Pantry items not found!');
+      return null;
+    }
+  }
+  catch (error) {
+    console.error('Error getting pantry items on Server Side:', error);
+    return null;
+  }
+}
 
 // ______________________Functions Above__________________________________________________________________________
 
