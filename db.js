@@ -92,23 +92,27 @@ async function insertNewPantry(username, password, name, zip_code, email, addres
 }
 
 // Function to create a new pantry table
-async function createNewPantryTable(NEW_PANTRY_NAME) {
+async function createNewPantryTable(NEW_PANTRY_NAME) { 
     try {
+        // Manually wrap table name in backticks to handle special characters
+        const escapedTableName = `\`${NEW_PANTRY_NAME.replace(/`/g, '')}\``;
+
         await pool.query(
-            `CREATE TABLE ${mysql.escapeId(NEW_PANTRY_NAME)} (
+            `CREATE TABLE ${escapedTableName} (
                 FOOD_ID INT AUTO_INCREMENT PRIMARY KEY,
                 FOOD_NAME VARCHAR(255) NOT NULL,
                 STATUS VARCHAR(255) NOT NULL
             )`
         );
-        console.log(`Table ${NEW_PANTRY_NAME} created successfully!`);
+
+        console.log(`Table "${NEW_PANTRY_NAME}" created successfully!`);
     } catch (error) {
         console.error('Error creating new pantry table:', error);
     }
 }
 
-// Placeholder functions to manage pantry item statuses
 
+// Placeholder functions to manage pantry item statuses
 async function addItemToPantry(pantryName, foodName, status) {
     try {
         await pool.query(`INSERT INTO ${mysql.escapeId(pantryName)} (FOOD_NAME, STATUS) VALUES (?, ?)`, [foodName, status]);
