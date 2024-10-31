@@ -114,8 +114,14 @@ async function createNewPantryTable(NEW_PANTRY_NAME) {
 // Placeholder functions to manage pantry item statuses
 async function addItemToPantry(pantryName, foodName, status) {
     try {
-        const NewName = `\`${pantryName.replace(/`/g, '')}\``;
-        await pool.query(`INSERT INTO ${mysql.escapeId(NewName)} (FOOD_NAME, STATUS) VALUES (?, ?)`, [foodName, status]);
+        // Manually escape the table name by wrapping it in backticks
+        const escapedPantryName = `\`${pantryName.replace(/`/g, '')}\``;
+
+        await pool.query(
+            `INSERT INTO ${escapedPantryName} (FOOD_NAME, STATUS) VALUES (?, ?)`,
+            [foodName, status]
+        );
+
         console.log(`Item ${foodName} added to ${pantryName} successfully!`);
     } catch (error) {
         console.error('Error adding item to pantry:', error);
