@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configure session middleware
 app.use(session({
-    secret: 'your_secret_key', // Replace with a strong secret key
+    secret: 'FEEDS', 
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false, maxAge: 60000 } // Session expires in 1 minute (60000 ms)
