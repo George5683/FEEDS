@@ -23,6 +23,7 @@ function setupServer() {
     app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'dashboard.html')));
     app.get('/my-items', (req, res) => res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'my-items.html')));
     app.get('/item-browser', (req, res) => res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'item-browser.html')));
+    app.get('/pantry-dashboard', (req, res) => res.sendFile(path.join(__dirname, 'Resources', 'HTML', 'pantry-dashboard.html')));
 }
 
 // Main function to initialize the server
