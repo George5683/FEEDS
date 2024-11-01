@@ -1,0 +1,174 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center;
+  align-items: center;
+  background-color: #101827; 
+}
+
+.topnav {
+  background-color: #4e8f58;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #101827;
+  color: white;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #101827;
+  color: white;
+}
+
+h1 {
+  color: white;
+}
+
+h2 {
+  text-align: center;
+}
+
+h3 {
+  color: white;
+}
+
+h4 {
+  text-align: center;
+  color: grey;
+}
+
+.logo-container {
+  text-align: center;
+}
+
+.logo-container img {
+  max-width: 150px; 
+  display: block;
+  margin: 0 auto; /* Center the image horizontally */
+}
+
+.title-text {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  gap: 20px; /* Space between boxes */
+  width: 95%;
+  max-width: 1200px;
+  background-color: transparent;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #4e8f58;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 40px;
+}
+
+.pantry {
+  background-color: white;
+  width: 100%;
+  border-radius: 40px;
+}
+
+button {
+  width: 40%;
+  padding: 6px;
+  background-color: darkgreen; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-top: 20px;
+  cursor: pointer;
+  margin-left: 100px;
+}
+
+button:hover {
+  background-color: #14203B;
+}
+
+.pantryimage {
+  max-width: 150px; 
+  display: block;
+  margin: 0 auto; /* Center the image horizontally */
+}
+
+.info {
+  width: 20%;
+  padding: 6px;
+  background-color: darkgray; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-top: 20px;
+  cursor: pointer;
+  margin-left: 135px;
+  margin-bottom: 20px;
+}
+
+.info:hover {
+  background-color: grey;
+}
+
+.close {
+  width: 20%;
+  padding: 6px;
+  background-color: red; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-top: 20px;
+  cursor: pointer;
+  margin-left: 135px;
+  margin-bottom: 20px;
+}
+
+.close:hover {
+  background-color: darkred;
+}
+
+.information {
+  background-color: white;
+  width: 100%;
+  display: none;
+}
+
+/* Responsive design */
+@media (max-width: 800px) {
+  .container {
+      grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+  }
+}
+
+@media (max-width: 500px) {
+  .container {
+      grid-template-columns: 1fr; /* 1 column on very small screens */
+  }
+}
