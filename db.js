@@ -1,5 +1,114 @@
 const mysql = require('mysql2/promise');
 
+// Class for the person login in whether pantry or ordinary person
+class LoginUser {
+    constructor(Email, Password) {
+        this.Email = Email;
+        this.Password = Password;
+    }
+
+    // Function to get the email of the user
+    getEmail() {
+        return this.Email;
+    }
+
+    // Function to get the password of the user
+    getPassword() {
+        return this.Password;
+    }
+
+    // Function to get all the information of the user
+    getAll(){
+        return this;
+    }
+
+    // Method to clean up resources
+    cleanup() {
+        this.Name = null;
+        this.Email = null;
+        this.Password = null;
+        this.Username = null;
+        this.ZipCode = null;
+    }
+
+}
+
+// Subclass for the Pantry user
+class PantryUser extends LoginUser{
+    constructor(Name, Email, Password, ZipCode, Username){
+        super(Email, Password);
+        this.Name = Name;
+        this.ZipCode = ZipCode;
+        this.Username = Username;
+    }
+
+    // Function for cleaning up
+    cleanup() {
+        super.cleanup();
+        this.Name = null;
+        this.ZipCode = null;
+        this.Username = null;
+    }
+
+    // Function to get the name of the user
+    getName() {
+        return this.Name;
+    }
+
+    // Function to get the zip code of the user
+    getZipCode() {
+        return this.ZipCode;
+    }
+
+    // Function to get the username of the user
+    getUsername() {
+        return this.Username;
+    }
+
+    // Function to get all the information of the user
+    getAll(){
+        return this;
+    }
+}
+
+// Subclass for the ordinary user
+class OrdinaryUser extends LoginUser{
+    constructor(Name, Email, Password, ZipCode, Username){
+        super(Email, Password);
+        this.Name = Name;
+        this.ZipCode = ZipCode;
+        this.Username = Username;
+    }
+
+    // Function for cleaning up
+    cleanup() {
+        super.cleanup();
+        this.Name = null;
+        this.ZipCode = null;
+        this.Username = null;
+    }
+
+    // Function to get the name of the user
+    getName() {
+        return this.Name;
+    }
+
+    // Function to get the zip code of the user
+    getZipCode() {
+        return this.ZipCode;
+    }
+
+    // Function to get the username of the user
+    getUsername() {
+        return this.Username;
+    }
+
+    // Function to get all the information of the user
+    getAll(){
+        return this;
+    }
+}
+
 // MySQL Connection Pool
 const pool = mysql.createPool({
     host: 'sql5.freesqldatabase.com', // Remote database host
@@ -111,7 +220,7 @@ async function createNewPantryTable(NEW_PANTRY_NAME) {
     }
 }
 
-// Placeholder functions to manage pantry item statuses
+// Function for adding items to the pantry  
 async function addItemToPantry(pantryName, foodName, status) {
     try {
         // Manually escape the table name by wrapping it in backticks
@@ -128,12 +237,32 @@ async function addItemToPantry(pantryName, foodName, status) {
     }
 }
 
+// Function for updating status of items in the pantry
 async function updateItemStatus(pantryName, foodName, status) {
     try {
         await pool.query(`UPDATE ${mysql.escapeId(pantryName)} SET STATUS = ? WHERE FOOD_NAME = ?`, [status, foodName]);
         console.log(`Status of ${foodName} in ${pantryName} updated to ${status} successfully!`);
     } catch (error) {
         console.error('Error updating item status:', error);
+    }
+}
+
+// Function to verify a pantry in the database
+async function verifyPantry(email, password) {
+    try {
+        const [results] = await pool.query(
+            'SELECT * FROM PANTRY_INFO WHERE EMAIL = ? AND PASSWORD = ?',
+            [email, password]
+        );
+        if (results.length > 0) {
+            results[0].NAME = results[0].NAME.charAt(0).toUpperCase() + results[0].NAME.slice(1).toLowerCase();
+            return results[0];
+        }
+        console.log('Pantry not found!');
+        return null;
+    } catch (error) {
+        console.error('Error verifying pantry:', error);
+        return null;
     }
 }
 
@@ -146,5 +275,9 @@ module.exports = {
     insertNewPantry,
     createNewPantryTable,
     addItemToPantry,
-    updateItemStatus
+    updateItemStatus,
+    LoginUser,
+    PantryUser,
+    verifyPantry,
+    OrdinaryUser,
 };

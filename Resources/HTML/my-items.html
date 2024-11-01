@@ -42,4 +42,9 @@
           </tr>
         </table>
     </div>
+    <script>
+      window.addEventListener('beforeunload', function (event) {
+          navigator.sendBeacon('/cleanup');
+      });
+  </script>
 </body>

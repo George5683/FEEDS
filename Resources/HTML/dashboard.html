@@ -26,5 +26,10 @@
     <div class="container">
     
     <script src="../HTML_SCRIPTS/dashboard.js"></script>
+    <script>
+        window.addEventListener('beforeunload', function (event) {
+            navigator.sendBeacon('/cleanup');
+        });
+    </script>
 </body>
 </html>

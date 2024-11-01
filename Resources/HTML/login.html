@@ -38,5 +38,10 @@
         </div>
     </div>
     <script src="../HTML_SCRIPTS/login_script.js"></script>
+    <script>
+        window.addEventListener('beforeunload', function (event) {
+            navigator.sendBeacon('/cleanup');
+        });
+    </script>
 </body>
 </html>
