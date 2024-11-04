@@ -24,7 +24,7 @@
             <th>In Stock: </th>
             <th>Last Stocked Date: </th>
           </tr>
-          <tr>
+          <tr onclick="showPopup('Banana', 'IN STOCK', '01/05/2023')">
             <td>
               <img class="foodimage" src="../Images/new_logo.png" alt="Food Image">
               Banana
@@ -32,7 +32,7 @@
             <td>0</td>
             <td>01/05/2023</td>
           </tr>
-          <tr>
+          <tr onclick="showPopup('Yogurt', 'LOW STOCK', '01/05/2024')">
             <td>
               <img class="foodimage" src="../Images/new_logo.png" alt="Food Image">
               Yogurt
@@ -42,6 +42,15 @@
           </tr>
         </table>
     </div>
+    <div id="popupModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="itemName"></h2>
+        <p>In Stock: <span id="itemStock"></span></p>
+        <p>Last Stocked Date: <span id="itemDate"></span></p>
+      </div>
+    </div>
+    <script src="../HTML_SCRIPTS/item_table_script.js"></script>
     <script>
       window.addEventListener('beforeunload', function (event) {
           navigator.sendBeacon('/cleanup');

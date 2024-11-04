@@ -91,6 +91,50 @@ app.post('/SignOutUser', (req, res) => {
     }
 });
 
+// Routing to get all pantry information
+app.post('/GetPantryInfo', async (req, res) => {
+    try {
+        const info = await db.getAllPantryInfo();
+        res.json(info);
+    } catch (error) {
+        res.status(500).send('Error retrieving pantry information');
+    }
+});
+
+// Routing to get specific pantry items
+app.post('/GetPantryItems', async (req, res) => {
+    try {
+        const info = await db.getPantrySpecificItems(req.body.pantryName);
+        res.json(info);
+    } catch (error) {
+        res.status(500).send('Error retrieving pantry items');
+    }
+});
+
+// Routing to insert a new pantry
+app.post('/InsertNewPantry', async (req, res) => {
+    const { username, password, name, zip_code, email, address } = req.body;
+    try {
+        await db.insertNewPantry(username, password, name, zip_code, email, address);
+        res.status(201).send('New pantry added successfully');
+    } catch (error) {
+        console.error('Error adding pantry:', error);
+        res.status(500).send('Error adding pantry');
+    }
+});
+
+// Routing to create a new pantry table
+app.post('/CreateNewPantryTable', async (req, res) => {
+    const { NEW_PANTRY_NAME } = req.body;
+    try {
+        await db.createNewPantryTable(NEW_PANTRY_NAME);
+        res.status(201).send('New pantry table created successfully');
+    } catch (error) {
+        console.error('Error creating pantry table:', error);
+        res.status(500).send('Error creating pantry table');
+    }
+});
+
 // Route to handle cleanup request
 app.post('/cleanup', (req, res) => {
     if (req.session.currentUser) {
