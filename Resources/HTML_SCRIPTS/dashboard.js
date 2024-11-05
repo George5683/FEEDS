@@ -35,7 +35,7 @@ async function main() {
 
               const image = document.createElement('img');
               image.classList.add('pantryimage');
-              image.src = '../Images/new_logo.png';
+              image.src = `../Images/${pantry.NAME}.png`;
               image.alt = `${pantry.NAME} Image`;
 
               const selectButton = document.createElement('a');
