@@ -18,6 +18,7 @@ body {
 
 .foodimage {
   max-width: 150px; 
+  max-height: 150px; 
   display: block;
   size: 30px 30px;
   margin: 0 auto; /* Center the image horizontally */
@@ -39,7 +40,6 @@ body {
     background-color: #4e8f58;
     border-radius: 40px;
     width: 90%;
-    height: 80vh;
 }
 
 table, th, td {
