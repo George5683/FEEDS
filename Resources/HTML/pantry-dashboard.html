@@ -7,39 +7,19 @@
     <link rel="stylesheet" href="../CSS/pantry-dashboard.css">
 </head>
 <div class="topnav">
-  <!-- Change href so that they redirect to their respective pages -->
-    <a href="/dashboard">Dashboard</a>
-    <a href="/item-browser">Item Browser</a>
-    <a class="active" href="./my-items">My Items</a>
-  </div>
+</div>
 <body>
     <div class="welcome-text">
-        <h1>Welcome!</h1>
-        <h2>Here you can update the stock of your items.</h2>
+        <h1 id = PantryNamePlaceHolder>[Pantry Name]</h1>
+        <h2>Here you can update your stock for each of your items.</h2>
 
     </div>
     <div class="table-container">
-      <table>
+      <table id="browserTable">
           <tr>
             <th>Item</th>
             <th>In Stock: </th>
             <th>Last Stocked Date: </th>
-          </tr>
-          <tr onclick="showPopup('Banana', 'IN STOCK', '01/05/2023')">
-            <td>
-              <img class="foodimage" src="../Images/new_logo.png" alt="Food Image">
-              Banana
-            </td>
-            <td>0</td>
-            <td>01/05/2023</td>
-          </tr>
-          <tr onclick="showPopup('Yogurt', 'LOW STOCK', '01/05/2024')">
-            <td>
-              <img class="foodimage" src="../Images/new_logo.png" alt="Food Image">
-              Yogurt
-            </td>
-            <td>100</td>
-            <td>01/05/2024</td>
           </tr>
         </table>
     </div>
@@ -49,9 +29,11 @@
         <h2 id="itemName"></h2>
         <p>In Stock: <span id="itemStock"></span></p>
         <p>Last Stocked Date: <span id="itemDate"></span></p>
+        <label for="stockSlider">Change Stock Status:</label>
+        <input type="range" id="stockSlider" min="1" max="3" step="1">
       </div>
     </div>
-    <script src="../HTML_SCRIPTS/item_table_script.js"></script>
+    <script src="../HTML_SCRIPTS/pantry_dashboard.js"></script>
     <script>
       window.addEventListener('beforeunload', function (event) {
           navigator.sendBeacon('/cleanup');

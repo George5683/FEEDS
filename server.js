@@ -111,6 +111,18 @@ app.post('/GetPantryItems', async (req, res) => {
     }
 });
 
+// Routing to update item status from pantry dashboard
+app.post('/updateItemStatus', async (req, res) => {
+    const { pantryName, foodName, status } = req.body;
+    try {
+        await db.updateItemStatus(pantryName, foodName, status);
+        res.status(200).send(`Status of ${foodName} updated to ${status}`);
+    } catch (error) {
+        console.error('Error updating item status:', error);
+        res.status(500).send('Error updating item status');
+    }
+});
+
 // Routing to insert a new pantry
 app.post('/InsertNewPantry', async (req, res) => {
     const { username, password, name, zip_code, email, address } = req.body;
