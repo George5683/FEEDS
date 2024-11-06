@@ -178,7 +178,7 @@ async function getAllPantryInfo() {
 // Function to get items from a specific pantry
 async function getPantrySpecificItems(pantryName) {
     try {
-        const [results] = await pool.query(`SELECT * FROM ${mysql.escapeId(pantryName)}`);
+        const [results] = await pool.query(`SELECT * FROM ${mysql.escapeId(pantryName).replace(/`.`/g, `.`)}`);
         console.log(`Items from ${pantryName} retrieved successfully!`);
         return results;
     } catch (error) {
