@@ -79,7 +79,6 @@ app.post('/SignInUser', async (req, res) => {
 // Routing for logout functionality
 app.post('/SignOutUser', (req, res) => {
     if (req.session.currentUser) {
-        req.session.currentUser.cleanup(); // Clean up resources
         req.session.destroy(err => {
             if (err) {
                 return res.status(500).send('Error signing out');
@@ -150,7 +149,6 @@ app.post('/CreateNewPantryTable', async (req, res) => {
 // Route to handle cleanup request
 app.post('/cleanup', (req, res) => {
     if (req.session.currentUser) {
-        req.session.currentUser.cleanup(); // Clean up resources
         req.session.destroy(err => {
             if (err) {
                 console.error('Error during cleanup:', err);

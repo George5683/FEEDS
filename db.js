@@ -152,6 +152,7 @@ async function verifyUser(email, password) {
             [email, password]
         );
         if (results.length > 0) {
+            console.log('User found Logging in!');
             results[0].NAME = results[0].NAME.charAt(0).toUpperCase() + results[0].NAME.slice(1).toLowerCase();
             return results[0]; // Return user info to be stored
         }
@@ -167,7 +168,7 @@ async function verifyUser(email, password) {
 async function getAllPantryInfo() {
     try {
         const [results] = await pool.query('SELECT * FROM PANTRY_INFO');
-        console.log('Pantry info retrieved successfully!');
+        console.log('Pantry info retrieved for displaying on dashboard!');
         return results;
     } catch (error) {
         console.error('Error getting pantry info:', error);
@@ -258,7 +259,7 @@ async function verifyPantry(email, password) {
             results[0].NAME = results[0].NAME.charAt(0).toUpperCase() + results[0].NAME.slice(1).toLowerCase();
             return results[0];
         }
-        console.log('Pantry not found!');
+        //console.log('Pantry not found!');
         return null;
     } catch (error) {
         console.error('Error verifying pantry:', error);
