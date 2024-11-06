@@ -62,10 +62,10 @@ app.post('/SignInUser', async (req, res) => {
         const userInfo = await db.verifyUser(email, password);
         const possiblePantry = await db.verifyPantry(email, password);
         if (userInfo) {
-            req.session.currentUser = new OrdinaryUser(userInfo.Name, email, password, userInfo.ZipCode, userInfo.Username);
+            req.session.currentUser = new OrdinaryUser(userInfo.NAME, email, password, userInfo.ZIP_CODE, userInfo.USERNAME);
             res.json({ name: req.session.currentUser.getName() });
         } else if (possiblePantry) {
-            req.session.currentUser = new PantryUser(possiblePantry.Name, email, password, possiblePantry.ZipCode, possiblePantry.Username);
+            req.session.currentUser = new PantryUser(possiblePantry.NAME, email, password, possiblePantry.ZIP_CODE, possiblePantry.USERNAME);
             res.json({ name: req.session.currentUser.getName() });
         } else {
             res.status(401).send('Not authorized to sign in');
