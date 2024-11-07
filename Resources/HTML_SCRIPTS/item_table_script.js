@@ -46,18 +46,32 @@ function addRow(name, status) {
   let newItem = newRow.insertCell(0);
   let newStock = newRow.insertCell(1);
   let newDate = newRow.insertCell(2);
+  let newFavorite = newRow.insertCell(3);
   let newImage = document.createElement('img');
   newImage.src = `./Images/${iName}.png`;
   newImage.classList.add("foodimage");
   let nameText = document.createTextNode(name);
   let stockText = document.createTextNode(status);
   let dateText = document.createTextNode("11/02/2024");
+
+  let favStar = document.createElement("div");
+  favStar.innerHTML = `<span class="star" onclick="toggleStar(this)" data-item-id="1">&#9734;</span>`;
   newItem.appendChild(newImage);
   newItem.appendChild(nameText);
   newStock.appendChild(stockText);
   newDate.appendChild(dateText);
-  newRow.addEventListener("click", function() {
+  newFavorite.appendChild(favStar);
+  newItem.addEventListener("click", function() {
     showPopup(name, status, "11/02/2024");
+  });
+  newStock.addEventListener("click", function() {
+    showPopup(name, status, "11/02/2024");
+  });
+  newDate.addEventListener("click", function() {
+    showPopup(name, status, "11/02/2024");
+  });
+  favStar.addEventListener("click", function() {
+    // Instert fav function here (Item name will be nameText)
   });
 }
 
