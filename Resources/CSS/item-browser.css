@@ -17,8 +17,10 @@ body {
 }
 
 .foodimage {
-  max-width: 150px; 
+  max-width: 180px; 
   max-height: 150px; 
+  min-width: 125px; 
+  min-height: 100px; 
   display: block;
   size: 30px 30px;
   margin: 0 auto; /* Center the image horizontally */
