@@ -7,20 +7,21 @@ const db = require('./db.js'); // Importing db functions
 const app = express();
 const PORT = 8005;
 
-// Middleware to parse JSON and URL-encoded bodies
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Configure session middleware
-app.use(session({
-    secret: 'FEEDS', 
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false, maxAge: 60000 } // Session expires in 1 minute (60000 ms)
-}));
-
 // Function to set up static file serving and routes
 function setupServer() {
+
+    // Middleware to parse JSON and URL-encoded bodies
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+
+    // Configure session middleware
+    app.use(session({
+        secret: 'FEEDS', 
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: false, maxAge: 60000 } // Session expires in 1 minute (60000 ms)
+    }));
+
     // Serve static files from the Source and Resources directories
     app.use(express.static(path.join(__dirname, 'Source')));
     app.use(express.static(path.join(__dirname, 'Resources')));
@@ -143,6 +144,24 @@ app.post('/CreateNewPantryTable', async (req, res) => {
     } catch (error) {
         console.error('Error creating pantry table:', error);
         res.status(500).send('Error creating pantry table');
+    }
+});
+
+// Routing to insert a new favorited item into the table
+app.post('/InsertFavoritedItem', async (req, res) => {
+    const { foodName } = req.body;
+    try {
+        let problem = await db.insertFavoritedItem(foodName, req.session.currentUser);
+        // Error checking if the database accomplished the task
+        if(problem == false){
+            res.status(500).send('Error adding favorited item to the database');
+        }
+        else{
+            res.status(201).send('New favorited item added successfully');
+        }
+    } catch (error) {
+        console.error('Error adding favorited item:', error);
+        res.status(500).send('Error adding favorited item');
     }
 });
 

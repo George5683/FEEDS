@@ -267,6 +267,45 @@ async function verifyPantry(email, password) {
     }
 }
 
+// Insert into the favorited items table
+async function insertFavoritedItem(FoodName, UserType) {
+    try {
+        // trying to get the food id from the food table
+        try{
+            // getting user id from the user table
+            const [results1] = await pool.query(
+                'SELECT * FROM USER_INFO WHERE EMAIL = ?',
+                [UserType.getEmail()]
+            );
+            //printing the results
+            console.log('results: ' + results1);
+
+            // getting the food id from the Salvation Army table
+            const [results] = await pool.query(
+                'SELECT * FROM SALVATION_ARMY WHERE FOOD_NAME = ?',
+                [FoodName]
+            );
+
+            // printing the results
+            console.log('Food ID: ' + results);
+            
+        }catch (error){
+            console.error('Error adding favorited item:', error);
+            return false;
+        }
+        // inserting the favorited item into the table
+        await pool.query(
+            'INSERT INTO USER_FAVORITES (FoodID, UserID) VALUES (?, ?, ?)',
+            [FoodID, UserID]
+        );
+        console.log('Favorited item added successfully!');
+        return true;
+    } catch (error) {
+        console.error('Error adding favorited item:', error);
+        return false;
+    }
+}
+
 module.exports = {
     addUser,
     deleteUser,
@@ -281,4 +320,5 @@ module.exports = {
     PantryUser,
     verifyPantry,
     OrdinaryUser,
+    insertFavoritedItem,
 };
