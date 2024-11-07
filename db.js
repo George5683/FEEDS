@@ -147,6 +147,8 @@ async function deleteUser(username) {
 // Function to verify a user
 async function verifyUser(email, password) {
     try {
+        // printing the results
+        console.log('Email: ' + email);
         const [results] = await pool.query(
             'SELECT * FROM USER_INFO WHERE EMAIL = ? AND PASSWORD = ?',
             [email, password]

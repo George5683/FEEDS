@@ -83,6 +83,13 @@ function showPopup(itemName, itemStock, itemDate) {
     }
   }
 
+  function toggleStar(element) {
+    const itemId = element.getAttribute("data-item-id");
+    const isSelected = element.classList.toggle("selected");
+  
+    // Change star appearance
+    element.innerHTML = isSelected ? "&#9733;" : "&#9734;"; // &#9733; is a filled star
+  }
 
 
   main();

@@ -142,3 +142,14 @@ table {
   text-decoration: none;
   cursor: pointer;
 }
+
+.star {
+  cursor: pointer;
+  font-size: 24px;
+  color: gray; /* Default color for unselected star */
+}
+
+.star.selected {
+  color: gold; /* Color when the star is selected */
+}
+
