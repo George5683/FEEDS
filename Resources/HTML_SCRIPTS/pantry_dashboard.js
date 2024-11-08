@@ -3,11 +3,11 @@ async function main(){
     
     // Get the query parameter from the URL
     const urlParams = new URLSearchParams(window.location.search);
-    const pantryName = urlParams.get('pantryName');
+    const pantryName = urlParams.get('name');
   
     // Use the pantryName value
     if (pantryName) {
-        console.log(`Selected Pantry: ${pantryName}`);
+        //console.log(`Selected Pantry: ${pantryName}`);
         // Display the pantry name or use it in your logic
         if (PantryNamePlaceHolder) {
             PantryNamePlaceHolder.textContent = `Pantry: ${pantryName}`;

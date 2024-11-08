@@ -258,7 +258,6 @@ async function verifyPantry(email, password) {
             [email, password]
         );
         if (results.length > 0) {
-            results[0].NAME = results[0].NAME.charAt(0).toUpperCase() + results[0].NAME.slice(1).toLowerCase();
             return results[0];
         }
         //console.log('Pantry not found!');
@@ -280,7 +279,7 @@ async function insertFavoritedItem(FoodName, UserType) {
                 [UserType.getEmail()]
             );
             //printing the results
-            console.log('results: ' + results1);
+            console.log('results from SQL: ' + results1);
 
             // getting the food id from the Salvation Army table
             const [results] = await pool.query(
