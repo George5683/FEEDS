@@ -54,36 +54,8 @@ async function main() {
 
               pantryDiv.append(title, image, selectButton, infoButton);
 
-              // Information Container
-              const infoDiv = document.createElement('div');
-              infoDiv.classList.add('information');
-              infoDiv.id = `i${index + 1}`;
-              infoDiv.style.display = 'none'; // Hide initially
-
-              const infoTitle = document.createElement('h2');
-              infoTitle.textContent = pantry.NAME;
-
-              const address = document.createElement('h4');
-              address.textContent = pantry.ADDRESS;
-
-              const zipcode = document.createElement('h4');
-              zipcode.textContent = pantry.ZIP_CODE;
-
-              const closeButton = document.createElement('button');
-              closeButton.classList.add('close');
-              closeButton.id = `close${index + 1}`;
-              closeButton.textContent = 'Close';
-
-              // Add event listener for close button
-              closeButton.addEventListener('click', () => {
-                  pantryDiv.style.display = 'unset';
-                  infoDiv.style.display = 'none';
-              });
-
-              infoDiv.append(infoTitle, address, zipcode, closeButton);
-
-              // Append both pantry and information divs to the box
-              box.append(pantryDiv, infoDiv);
+              // Append  pantry div to the box
+              box.append(pantryDiv);
               container.appendChild(box);
           });
       } else {
