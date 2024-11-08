@@ -16,7 +16,7 @@ app.use(session({
     secret: 'FEEDS', 
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false, maxAge: 60000 } // Session expires in 1 minute (60000 ms)
+    cookie: { secure: false} // Session expires in 10 minute (600000 ms)
 }));
 
 // Function to set up static file serving and routes
@@ -38,6 +38,7 @@ function setupServer() {
 // Main function to initialize the server
 async function main() {
     setupServer();
+
     // Start the server
     app.listen(PORT, () => {
         console.log(`Server is running on http://localhost:${PORT}`);
@@ -84,6 +85,8 @@ app.post('/SignInUser', async (req, res) => {
 // Routing for logout functionality
 app.post('/SignOutUser', (req, res) => {
     if (req.session.currentUser) {
+        // printing cleaning
+        console.log("Cleaning up the session");
         req.session.destroy(err => {
             if (err) {
                 return res.status(500).send('Error signing out');
@@ -98,7 +101,7 @@ app.post('/SignOutUser', (req, res) => {
 // Routing to get all pantry information
 app.post('/GetPantryInfo', async (req, res) => {
     try {
-        const info = await db.getAllPantryInfo();
+        let info = await db.getAllPantryInfo();
         res.json(info);
     } catch (error) {
         res.status(500).send('Error retrieving pantry information');
@@ -155,7 +158,9 @@ app.post('/CreateNewPantryTable', async (req, res) => {
 app.post('/InsertFavoritedItem', async (req, res) => {
     const { foodName } = req.body;
     try {
-        let problem = await db.insertFavoritedItem(foodName, req.session.currentUser);
+        // Error checking if the user is logged in
+        //console.log("Current User Session:", req.session.currentUser);
+        let problem = await db.insertFavoritedItem(foodName, req.session.currentUser.Email);
         // Error checking if the database accomplished the task
         if(problem == false){
             res.status(500).send('Error adding favorited item to the database');
@@ -166,6 +171,37 @@ app.post('/InsertFavoritedItem', async (req, res) => {
     } catch (error) {
         console.error('Error adding favorited item:', error);
         res.status(500).send('Error adding favorited item');
+    }
+});
+
+// Routing to remove a favorited item from the table
+app.post('/removeFavoritedItem', async (req, res) => {
+    const { foodName } = req.body;
+    try {
+        // Error checking if the user is logged in
+        //console.log("Current User Session:", req.session.currentUser);
+        let problem = await db.removeFavoritedItem(foodName, req.session.currentUser.Email);
+        // Error checking if the database accomplished the task
+        if(problem == false){
+            res.status(500).send('Error removing favorited item from the database');
+        }
+        else{
+            res.status(201).send('Favorited item removed successfully');
+        }
+    } catch (error) {
+        console.error('Error removing favorited item:', error);
+        res.status(500).send('Error removing favorited item');
+    }
+});
+
+// Routing to get all favorited items
+app.get('/GetFavoritedItems', async (req, res) => {
+    try {
+        let Items = await db.getFavoritedItems(req.session.currentUser.Email);
+        res.json(Items);
+        
+    } catch (error) {
+        res.status(500).send('Error retrieving favorited items');
     }
 });
 

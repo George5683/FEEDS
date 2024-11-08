@@ -269,41 +269,117 @@ async function verifyPantry(email, password) {
 }
 
 // Insert into the favorited items table
-async function insertFavoritedItem(FoodName, UserType) {
+async function insertFavoritedItem(FoodName, email) {
     try {
         // trying to get the food id from the food table
         try{
+            // printing the email
+            // console.log('Email: ' + email);
+            // printing the food name
+            // console.log('Food Name: ' + FoodName);
+
             // getting user id from the user table
             const [results1] = await pool.query(
                 'SELECT * FROM USER_INFO WHERE EMAIL = ?',
-                [UserType.getEmail()]
+                [email]
             );
             //printing the results
-            console.log('results from SQL: ' + results1);
+            // console.log('results from SQL: ' + JSON.stringify(results1));
 
-            // getting the food id from the Salvation Army table
+            // getting the user id from the results
+            const UserID = results1[0].USER_ID;
+
+            // getting the food id from a random pantry table
             const [results] = await pool.query(
-                'SELECT * FROM SALVATION_ARMY WHERE FOOD_NAME = ?',
+                'SELECT * FROM `Gainesville Harvest` WHERE FOOD_NAME = ?',
                 [FoodName]
             );
 
             // printing the results
-            console.log('Food ID: ' + results);
+            // console.log('Food ID: ' + results[0].FOOD_ID);
+
+            // putting the ID's into the FAVORITES table
+            await pool.query(
+                'INSERT INTO USER_FAVORITES (FOOD_ID, USER_ID) VALUES (?, ?)',
+                [results[0].FOOD_ID, UserID]
+            );
+
+            // printing the results
+            // console.log('Results: ' + JSON.stringify(result2));
             
+            console.log('Favorited item added successfully!');
+            return true;
+                        
         }catch (error){
             console.error('Error adding favorited item:', error);
             return false;
         }
-        // inserting the favorited item into the table
-        await pool.query(
-            'INSERT INTO USER_FAVORITES (FoodID, UserID) VALUES (?, ?, ?)',
-            [FoodID, UserID]
-        );
-        console.log('Favorited item added successfully!');
+        // // inserting the favorited item into the table
+        // await pool.query(
+        //     'INSERT INTO USER_FAVORITES (FoodID, UserID) VALUES (?, ?, ?)',
+        //     [FoodID, UserID]
+        // );
+        // console.log('Favorited item added successfully!');
         return true;
     } catch (error) {
         console.error('Error adding favorited item:', error);
         return false;
+    }
+}
+
+async function removeFavoritedItem(FoodName, email) {
+    try{
+        // getting the user id from the user table
+        const [results1] = await pool.query(
+            'SELECT * FROM USER_INFO WHERE EMAIL = ?',
+            [email]
+        );
+
+        // getting the user id from the results
+        const UserID = results1[0].USER_ID;
+
+        // getting the food id from the food table
+        const [results] = await pool.query(
+            'SELECT * FROM `Gainesville Harvest` WHERE FOOD_NAME = ?',
+            [FoodName]
+        );
+
+        // removing the favorited item from the table
+        await pool.query(
+            'DELETE FROM USER_FAVORITES WHERE FOOD_ID = ? AND USER_ID = ?',
+            [results[0].FOOD_ID, UserID]
+        );
+        console.log('Favorited item removed successfully!');
+        return true;
+    }catch(error){
+        console.error('Error removing favorited item:', error);
+        return false;
+
+    }
+}
+
+// Function to get all favorited items
+async function getFavoritedItems(email) {
+    try {
+        // getting the user id from the user table
+        const [results1] = await pool.query(
+            'SELECT * FROM USER_INFO WHERE EMAIL = ?',
+            [email]
+        );
+
+        // getting the user id from the results
+        const UserID = results1[0].USER_ID;
+
+        // getting the favorited items from the table
+        const [results] = await pool.query(
+            'SELECT * FROM USER_FAVORITES WHERE USER_ID = ?',
+            [UserID]
+        );
+        //console.log('Results: ' + JSON.stringify(results));
+        return results;
+    } catch (error) {
+        console.error('Error getting favorited items:', error);
+        return null;
     }
 }
 
@@ -322,4 +398,6 @@ module.exports = {
     verifyPantry,
     OrdinaryUser,
     insertFavoritedItem,
+    removeFavoritedItem,
+    getFavoritedItems,
 };
