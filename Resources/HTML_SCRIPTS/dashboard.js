@@ -35,7 +35,7 @@ async function main() {
 
               const image = document.createElement('img');
               image.classList.add('pantryimage');
-              image.src = '../Images/new_logo.png';
+              image.src = `../Images/${pantry.NAME}.png`;
               image.alt = `${pantry.NAME} Image`;
 
               const selectButton = document.createElement('a');
@@ -49,42 +49,13 @@ async function main() {
 
               // Add event listener for info button
               infoButton.addEventListener('click', () => {
-                  pantryDiv.style.display = 'none';
-                  infoDiv.style.display = 'unset';
+                  showPopup(pantry.NAME, pantry.ADDRESS, pantry.EMAIL);
               });
 
               pantryDiv.append(title, image, selectButton, infoButton);
 
-              // Information Container
-              const infoDiv = document.createElement('div');
-              infoDiv.classList.add('information');
-              infoDiv.id = `i${index + 1}`;
-              infoDiv.style.display = 'none'; // Hide initially
-
-              const infoTitle = document.createElement('h2');
-              infoTitle.textContent = pantry.NAME;
-
-              const address = document.createElement('h4');
-              address.textContent = pantry.ADDRESS;
-
-              const zipcode = document.createElement('h4');
-              zipcode.textContent = pantry.ZIP_CODE;
-
-              const closeButton = document.createElement('button');
-              closeButton.classList.add('close');
-              closeButton.id = `close${index + 1}`;
-              closeButton.textContent = 'Close';
-
-              // Add event listener for close button
-              closeButton.addEventListener('click', () => {
-                  pantryDiv.style.display = 'unset';
-                  infoDiv.style.display = 'none';
-              });
-
-              infoDiv.append(infoTitle, address, zipcode, closeButton);
-
-              // Append both pantry and information divs to the box
-              box.append(pantryDiv, infoDiv);
+              // Append  pantry div to the box
+              box.append(pantryDiv);
               container.appendChild(box);
           });
       } else {
@@ -97,3 +68,29 @@ async function main() {
 }
 
 main();
+
+function showPopup(pantryName, pantryLocation, pantryEmail) {
+    // Get the modal
+    let modal = document.getElementById("popupModal");    // display the modal
+    modal.style.display = "block";
+    // populate the modal with the pantry information
+    document.getElementById("pName").textContent = pantryName;
+    document.getElementById("pLocation").textContent = pantryLocation;
+    document.getElementById("pEmail").textContent = pantryEmail;
+    const infoI = document.createElement('img');
+    infoI.src = `../Images/${pantryName}.png`;
+    infoI.alt = `${pantryName} Image`;
+    document.getElementById("infoImage").innerHTML = `<img src="../Images/${pantryName}.png" alt="${pantryName} Image">`;
+  //close the modal when clicking on <span> (x)
+  let closeBtn = document.querySelector(".close");
+  closeBtn.addEventListener('click', () => {
+    document.getElementById("popupModal").style.display = "none";
+    });
+  //close the modal when clicking anywhere outside of it
+  window.addEventListener('click', () => {
+    let modal = document.getElementById("popupModal");
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+    });
+}

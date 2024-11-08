@@ -17,7 +17,10 @@ body {
 }
 
 .foodimage {
-  max-width: 150px; 
+  max-width: 180px; 
+  max-height: 150px; 
+  min-width: 125px; 
+  min-height: 100px; 
   display: block;
   size: 30px 30px;
   margin: 0 auto; /* Center the image horizontally */
@@ -39,7 +42,6 @@ body {
     background-color: #4e8f58;
     border-radius: 40px;
     width: 90%;
-    height: 80vh;
 }
 
 table, th, td {
@@ -142,3 +144,14 @@ table {
   text-decoration: none;
   cursor: pointer;
 }
+
+.star {
+  cursor: pointer;
+  font-size: 24px;
+  color: gray; /* Default color for unselected star */
+}
+
+.star.selected {
+  color: gold; /* Color when the star is selected */
+}
+

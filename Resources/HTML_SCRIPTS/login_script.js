@@ -26,9 +26,16 @@ SignInButton.onclick = async function(event) {
     
         if (response.ok) {
           console.log("Response is: " + JSON.stringify(responseData));
-          alert('User signed in successfully!');
-          // Sending the user to the dashboard page with dynamic name
-          window.location.href = `/dashboard?name=${encodeURIComponent(responseData.name)}`;
+          if(responseData.user){
+            alert('User signed in successfully!');
+            // Sending the user to the dashboard page with dynamic name
+            window.location.href = `/dashboard?name=${encodeURIComponent(responseData.name)}`;
+          }
+          else{
+            alert('Pantry signed in successfully!');
+            window.location.href = `/pantry-dashboard?name=${encodeURIComponent(responseData.name)}`;
+          }
+
         } else {
           alert('Error signing into account. Please check your email and password and try again.');
         }
