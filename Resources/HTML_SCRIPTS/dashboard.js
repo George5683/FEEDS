@@ -49,8 +49,7 @@ async function main() {
 
               // Add event listener for info button
               infoButton.addEventListener('click', () => {
-                  pantryDiv.style.display = 'none';
-                  infoDiv.style.display = 'unset';
+                  showPopup(pantry.NAME, pantry.ADDRESS, pantry.EMAIL);
               });
 
               pantryDiv.append(title, image, selectButton, infoButton);
@@ -97,3 +96,29 @@ async function main() {
 }
 
 main();
+
+function showPopup(pantryName, pantryLocation, pantryEmail) {
+    // Get the modal
+    let modal = document.getElementById("popupModal");    // display the modal
+    modal.style.display = "block";
+    // populate the modal with the pantry information
+    document.getElementById("pName").textContent = pantryName;
+    document.getElementById("pLocation").textContent = pantryLocation;
+    document.getElementById("pEmail").textContent = pantryEmail;
+    const infoI = document.createElement('img');
+    infoI.src = `../Images/${pantryName}.png`;
+    infoI.alt = `${pantryName} Image`;
+    document.getElementById("infoImage").innerHTML = `<img src="../Images/${pantryName}.png" alt="${pantryName} Image">`;
+  //close the modal when clicking on <span> (x)
+  let closeBtn = document.querySelector(".close");
+  closeBtn.addEventListener('click', () => {
+    document.getElementById("popupModal").style.display = "none";
+    });
+  //close the modal when clicking anywhere outside of it
+  window.addEventListener('click', () => {
+    let modal = document.getElementById("popupModal");
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+    });
+}

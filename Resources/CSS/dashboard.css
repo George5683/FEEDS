@@ -137,24 +137,6 @@ button:hover {
   background-color: grey;
 }
 
-.close {
-  width: 20%;
-  padding: 6px;
-  background-color: red; 
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
-  margin-top: 20px;
-  cursor: pointer;
-  margin-left: 135px;
-  margin-bottom: 20px;
-}
-
-.close:hover {
-  background-color: darkred;
-}
-
 .information {
   background-color: white;
   width: 100%;
@@ -173,3 +155,39 @@ button:hover {
       grid-template-columns: 1fr; /* 1 column on very small screens */
   }
 }
+
+  /* Modal popup styling */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
