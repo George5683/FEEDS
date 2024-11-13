@@ -82,9 +82,26 @@ class Star {
 
 let count = 0;
 let FavoritedItemsIndex = [];
+let itemDirection = 0;
+let stockDirection = -1;
+let dateDirection = -1;
+let favoriteDirection = -1;
 
-async function main() {
+async function main(col, direction) {
+  let mainTable = document.getElementById("browserTable");
+  for(var i = mainTable.rows.length - 1; i > 0; i--) {
+    mainTable.deleteRow(i);
+  }
+  
   let PantryNamePlaceHolder = document.getElementById("PantryNamePlaceHolder");
+  let itemTitle = document.getElementById("tableI");
+  let stockTitle = document.getElementById("tableS");
+  let dateTitle = document.getElementById("tableD");
+  let favoriteTitle = document.getElementById("tableF");
+  itemTitle.textContent = "Item:";
+  stockTitle.textContent = "In Stock:";
+  dateTitle.textContent = "Last Stocked Date:";
+  favoriteTitle.textContent = "Favorite Item:";
 
   // Get the query parameter from the URL
   const urlParams = new URLSearchParams(window.location.search);
@@ -130,8 +147,64 @@ async function main() {
     const responseData = await response.json();
 
     if (response.ok) {
-      for (let i = 0; i < responseData.length; i++) {
-        await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+      if (col == 0) {   // Sort by Name 
+        if (direction == 0) {
+          itemTitle.textContent = 'Item: \u2193';
+          for (let i = 0; i < responseData.length; i++) {
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+          }
+        } else if (direction == 1) {
+          console.log("Hi")
+          itemTitle.textContent = 'Item: \u2191';
+          for (let i = responseData.length - 1; i >= 0; i--) {
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+          }
+        }
+      } else if (col == 1) {   // Sort by Stock
+        // Currently not implemented
+        if (direction == 0) {
+          stockTitle.textContent = 'In Stock: \u2193';
+          for (let i = 0; i < responseData.length; i++) {
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+          }
+        } else if (direction == 1) {
+          stockTitle.textContent = 'In Stock: \u2191';
+          for (let i = 0; i < responseData.length; i++) {
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+          }
+        }
+      } else if (col == 2) {   // Sort by Date
+        // Currently not implemented
+        if (direction == 0) {
+          dateTitle.textContent = 'Last Stocked Date: \u2193';
+          for (let i = 0; i < responseData.length; i++) {
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+          }
+        } else if (direction == 1) {
+          dateTitle.textContent = 'Last Stocked Date: \u2191';
+          for (let i = 0; i < responseData.length; i++) {
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+          }
+        }
+
+      } else if (col == 3) {   // Sort by Favorite
+        // Currently not implemented
+        if (direction == 0) {
+          favoriteTitle.textContent = 'Favorite Item: \u2193';
+          for (let i = 0; i < responseData.length; i++) {
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+          }
+        } else if (direction == 1) {
+          favoriteTitle.textContent = 'Favorite Item: \u2191';
+          for (let i = 0; i < responseData.length; i++) {
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+          }
+        }
+      } else {
+        itemTitle.textContent = 'Item: \u2193';
+        for (let i = 0; i < responseData.length; i++) {
+          await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+        }
       }
     }
 
@@ -156,6 +229,7 @@ async function addRow(name, status) {
   newImage.classList.add("foodimage");
   let nameText = document.createTextNode(name);
   let stockText = document.createTextNode(status);
+  // !! Data not present in database!!!!
   let dateText = document.createTextNode("11/02/2024");
 
   let favStar = document.createElement("span");
@@ -221,5 +295,80 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 }
+
+// Creates sorting for Items
+let itemTitle = document.getElementById("tableI");
+let stockTitle = document.getElementById("tableS");
+let dateTitle = document.getElementById("tableD");
+let favoriteTitle = document.getElementById("tableF");
+
+
+itemTitle.addEventListener('click', () => {
+  stockDirection = -1;
+  dateDirection = -1;
+  favoriteDirection = -1;
+  if (itemDirection == 0) {
+    itemDirection = 1;
+    main(0, 1);
+  }
+  else if (itemDirection == 1) {
+    itemDirection = 0;
+    main(0, 0);
+  } else {
+    itemDirection = 0;
+    main(0, 0);
+  }
+});
+
+stockTitle.addEventListener('click', () => {
+  itemDirection = -1;
+  dateDirection = -1;
+  favoriteDirection = -1;
+  if (stockDirection == 0) {
+    stockDirection = 1;
+    main(1, 1);
+  }
+  else if (stockDirection == 1) {
+    stockDirection = 0;
+    main(1, 0);
+  } else {
+    stockDirection = 0;
+    main(1, 0)
+  }
+});
+
+dateTitle.addEventListener('click', () => {
+  itemDirection = -1;
+  stockDirection = -1;
+  favoriteDirection = -1;
+  if (dateDirection == 0) {
+    dateDirection = 1;
+    main(2, 1);
+  }
+  else if (dateDirection == 1) {
+    dateDirection = 0;
+    main(2, 0);
+  } else {
+    dateDirection = 0;
+    main(2, 0)
+  }
+});
+
+favoriteTitle.addEventListener('click', () => {
+  itemDirection = -1;
+  stockDirection = -1;
+  dateDirection = -1;
+  if (favoriteDirection == 0) {
+    favoriteDirection = 1;
+    main(3, 1);
+  }
+  else if (favoriteDirection == 1) {
+    favoriteDirection = 0;
+    main(3, 0);
+  } else {
+    favoriteDirection = 0;
+    main(3, 0)
+  }
+});
 
 main();
