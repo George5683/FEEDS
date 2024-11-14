@@ -5,6 +5,7 @@ This is the software engineering project.
 - install express (npm install express)
 - install node js (https://nodejs.org/en)
 - Install mySQL (npm install mysql2)
+- install express-session (npm install express-session)
 
 # For mySQL
 - The user is admin and the password is password
