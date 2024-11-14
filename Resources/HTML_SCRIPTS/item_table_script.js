@@ -213,16 +213,32 @@ async function main(col, direction) {
         }
 
       } else if (col == 3) {   // Sort by Favorite
-        // Currently not implemented
+        // Issue when a user unfavorites an item and then sorts before refreshing page
+        let favList = [];
+        let notFavList = [];
+        for (let i = 0; i < responseData.length; i++) {
+          if (isFavorited(responseData[i].FOOD_ID)) {
+            favList.push(responseData[i]);
+          }
+          else {
+            notFavList.push(responseData[i]);
+          }
+        }
         if (direction == 0) {
           favoriteTitle.textContent = 'Favorite Item: \u2193';
-          for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
+          for (let i = 0; i < favList.length; i++) {
+            await addRow(favList[i].FOOD_NAME, favList[i].STATUS, favList[i].FOOD_ID);
+          }
+          for (let i = 0; i < notFavList.length; i++) {
+            await addRow(notFavList[i].FOOD_NAME, notFavList[i].STATUS, notFavList[i].FOOD_ID);
           }
         } else if (direction == 1) {
           favoriteTitle.textContent = 'Favorite Item: \u2191';
-          for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
+          for (let i = 0; i < notFavList.length; i++) {
+            await addRow(notFavList[i].FOOD_NAME, notFavList[i].STATUS, notFavList[i].FOOD_ID);
+          }
+          for (let i = 0; i < favList.length; i++) {
+            await addRow(favList[i].FOOD_NAME, favList[i].STATUS, favList[i].FOOD_ID);
           }
         }
       } else {
