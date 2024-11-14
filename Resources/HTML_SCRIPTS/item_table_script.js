@@ -151,26 +151,51 @@ async function main(col, direction) {
         if (direction == 0) {
           itemTitle.textContent = 'Item: \u2193';
           for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
           }
         } else if (direction == 1) {
           console.log("Hi")
           itemTitle.textContent = 'Item: \u2191';
           for (let i = responseData.length - 1; i >= 0; i--) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
           }
         }
       } else if (col == 1) {   // Sort by Stock
-        // Currently not implemented
+        let inStock = [];
+        let lowStock = [];
+        let noStock = [];
+        for (let i = 0; i < responseData.length; i++) {
+          if(responseData[i].STATUS == "IN STOCK") {
+            inStock.push(responseData[i]);
+          }
+          else if(responseData[i].STATUS == "LOW STOCK") {
+            lowStock.push(responseData[i]);
+          }
+          else {
+            noStock.push(responseData[i]);
+          }
+        }
         if (direction == 0) {
           stockTitle.textContent = 'In Stock: \u2193';
-          for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+          for (let i = 0; i < inStock.length; i++) {
+            await addRow(inStock[i].FOOD_NAME, inStock[i].STATUS, inStock[i].FOOD_ID);
+          }
+          for (let i = 0; i < lowStock.length; i++) {
+            await addRow(lowStock[i].FOOD_NAME, lowStock[i].STATUS, lowStock[i].FOOD_ID);
+          }
+          for (let i = 0; i < noStock.length; i++) {
+            await addRow(noStock[i].FOOD_NAME, noStock[i].STATUS, noStock[i].FOOD_ID);
           }
         } else if (direction == 1) {
           stockTitle.textContent = 'In Stock: \u2191';
-          for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+          for (let i = 0; i < noStock.length; i++) {
+            await addRow(noStock[i].FOOD_NAME, noStock[i].STATUS, noStock[i].FOOD_ID);
+          }
+          for (let i = 0; i < lowStock.length; i++) {
+            await addRow(lowStock[i].FOOD_NAME, lowStock[i].STATUS, lowStock[i].FOOD_ID);
+          }
+          for (let i = 0; i < inStock.length; i++) {
+            await addRow(inStock[i].FOOD_NAME, inStock[i].STATUS, inStock[i].FOOD_ID);
           }
         }
       } else if (col == 2) {   // Sort by Date
@@ -178,12 +203,12 @@ async function main(col, direction) {
         if (direction == 0) {
           dateTitle.textContent = 'Last Stocked Date: \u2193';
           for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
           }
         } else if (direction == 1) {
           dateTitle.textContent = 'Last Stocked Date: \u2191';
           for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
           }
         }
 
@@ -192,18 +217,18 @@ async function main(col, direction) {
         if (direction == 0) {
           favoriteTitle.textContent = 'Favorite Item: \u2193';
           for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
           }
         } else if (direction == 1) {
           favoriteTitle.textContent = 'Favorite Item: \u2191';
           for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
           }
         }
       } else {
         itemTitle.textContent = 'Item: \u2193';
         for (let i = 0; i < responseData.length; i++) {
-          await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS);
+          await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
         }
       }
     }
@@ -215,8 +240,7 @@ async function main(col, direction) {
 
 }
 
-async function addRow(name, status) {
-  count++;
+async function addRow(name, status, id) {
   let iName = name.split(' ').join('-');
   let bTable = document.getElementById("browserTable");
   let newRow = bTable.insertRow(-1);
@@ -238,7 +262,7 @@ async function addRow(name, status) {
 
   let Stars;
 
-  if(isFavorited(count)){
+  if(isFavorited(id)){
     Stars = new Star(favStar, true, name);
     Stars.addClickListener();
   }
