@@ -36,6 +36,10 @@ class Star {
           const responseData = await response;
       
           if (responseData) {
+            // remove the item from the favorited array
+            let ID = GetID(foodName);
+            FavoritedItemsIndex.splice(FavoritedItemsIndex.indexOf(ID), 1);
+            
             //console.log("Response is: " + JSON.stringify(responseData));
             console.log("Removed favorited item successfully!");
           } else {
@@ -80,6 +84,7 @@ class Star {
   }
 }
 
+let FavoritedItemsMap = new Map();
 let count = 0;
 let FavoritedItemsIndex = [];
 let itemDirection = 0;
@@ -118,6 +123,8 @@ async function main(col, direction) {
     .then(data => {
       for(let i = 0; i < data.length; i++){
         FavoritedItemsIndex[i] = data[i].FOOD_ID;
+        // Add the food name and food id to the map
+        FavoritedItemsMap.set(data[i].FOOD_NAME, data[i].FOOD_ID);
       }
     })
     .catch((error) => {
@@ -410,5 +417,11 @@ favoriteTitle.addEventListener('click', () => {
     main(3, 0)
   }
 });
+
+// Function to get the food ID from the food name
+async function GetID(FoodName){
+  let FoodID = FavoritedItemsMap.get(FoodName);
+  return FoodID;
+}
 
 main();

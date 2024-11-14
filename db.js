@@ -183,6 +183,7 @@ async function getPantrySpecificItems(pantryName) {
     try {
         const [results] = await pool.query(`SELECT * FROM ${mysql.escapeId(pantryName).replace(/`.`/g, `.`)}`);
         console.log(`Items from ${pantryName} retrieved successfully!`);
+        // console.log('Results: ' + JSON.stringify(results));
         return results;
     } catch (error) {
         console.error('Error getting pantry items:', error);
