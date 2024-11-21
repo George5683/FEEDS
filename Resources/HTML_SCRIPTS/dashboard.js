@@ -17,7 +17,7 @@ notificationTab.addEventListener('click', () => {
 
 // Sample notifications
 const notifications = [
-    "Pantry A has been updated.",
+    "Your Item (Food Name) has been restocked at (PantryName).",
     "New items added to Pantry B.",
     "Your pantry selections have been saved.",
 ];
