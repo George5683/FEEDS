@@ -92,7 +92,71 @@ let stockDirection = -1;
 let dateDirection = -1;
 let favoriteDirection = -1;
 
-async function main(col, direction) {
+async function main() {
+  let mainTable = document.getElementById("browserTable");
+  for(var i = mainTable.rows.length - 1; i > 0; i--) {
+    mainTable.deleteRow(i);
+  }
+
+  // Get the query parameter from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const pantryName = urlParams.get('pantryName');
+
+  // checking which items are favorited 
+  await fetch('/GetFavoritedItems', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      for(let i = 0; i < data.length; i++){
+        FavoritedItemsIndex[i] = data[i].FOOD_ID;
+        // Add the food name and food id to the map
+        FavoritedItemsMap.set(data[i].FOOD_NAME, data[i].FOOD_ID);
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('Error retrieving favorited items from server.');
+    });
+
+  // Use the pantryName value
+  if (pantryName) {
+      console.log(`Selected Pantry: ${pantryName}`);
+      if (PantryNamePlaceHolder) {
+          PantryNamePlaceHolder.textContent = `Pantry: ${pantryName}`;
+      }
+  } else {
+      console.error('Pantry name not found in the URL.');
+  }
+
+  try {
+    const response = await fetch('/GetPantryItems', {
+        method: 'POST',
+        body: JSON.stringify({ pantryName: pantryName }),
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    const responseData = await response.json();
+
+    if (response.ok) {
+      itemTitle.textContent = 'Item: \u2193';
+      for (let i = 0; i < responseData.length; i++) {
+        await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
+      }
+    }
+
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Error retrieving pantry information from server.');
+  }
+}
+
+async function refresh(col, direction) {
   let mainTable = document.getElementById("browserTable");
   for(var i = mainTable.rows.length - 1; i > 0; i--) {
     mainTable.deleteRow(i);
@@ -356,14 +420,14 @@ itemTitle.addEventListener('click', () => {
   favoriteDirection = -1;
   if (itemDirection == 0) {
     itemDirection = 1;
-    main(0, 1);
+    refresh(0, 1);
   }
   else if (itemDirection == 1) {
     itemDirection = 0;
-    main(0, 0);
+    refresh(0, 0);
   } else {
     itemDirection = 0;
-    main(0, 0);
+    refresh(0, 0);
   }
 });
 
@@ -373,14 +437,14 @@ stockTitle.addEventListener('click', () => {
   favoriteDirection = -1;
   if (stockDirection == 0) {
     stockDirection = 1;
-    main(1, 1);
+    refresh(1, 1);
   }
   else if (stockDirection == 1) {
     stockDirection = 0;
-    main(1, 0);
+    refresh(1, 0);
   } else {
     stockDirection = 0;
-    main(1, 0)
+    refresh(1, 0)
   }
 });
 
@@ -390,14 +454,14 @@ dateTitle.addEventListener('click', () => {
   favoriteDirection = -1;
   if (dateDirection == 0) {
     dateDirection = 1;
-    main(2, 1);
+    refresh(2, 1);
   }
   else if (dateDirection == 1) {
     dateDirection = 0;
-    main(2, 0);
+    refresh(2, 0);
   } else {
     dateDirection = 0;
-    main(2, 0)
+    refresh(2, 0)
   }
 });
 
@@ -407,14 +471,14 @@ favoriteTitle.addEventListener('click', () => {
   dateDirection = -1;
   if (favoriteDirection == 0) {
     favoriteDirection = 1;
-    main(3, 1);
+    refresh(3, 1);
   }
   else if (favoriteDirection == 1) {
     favoriteDirection = 0;
-    main(3, 0);
+    refresh(3, 0);
   } else {
     favoriteDirection = 0;
-    main(3, 0)
+    refresh(3, 0)
   }
 });
 
