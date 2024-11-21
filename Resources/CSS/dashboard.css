@@ -191,3 +191,52 @@ button:hover {
     text-decoration: none;
     cursor: pointer;
   }
+
+  /* Notification tab styles */
+.notification-tab {
+  float: right; /* Align to the right */
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.notification-tab:hover {
+  background-color: #101827;
+  color: white;
+}
+
+/* Notification popup styles */
+.notification-popup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 60px; /* Below the topnav */
+  right: 20px; /* Position on the right */
+  background-color: #fff;
+  border: 1px solid #888;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  border-radius: 10px;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.notification-popup h2 {
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.notification-popup ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.notification-popup ul li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #101827;
+}

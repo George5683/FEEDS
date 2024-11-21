@@ -5,6 +5,35 @@ const container = document.querySelector('.container'); // Container where pantr
 const urlParams = new URLSearchParams(window.location.search);
 const UsersName = urlParams.get('name');
 
+const notificationTab = document.getElementById('notification-tab');
+const notificationPopup = document.getElementById('notificationPopup');
+const notificationList = document.getElementById('notificationList');
+
+// Toggle popup visibility
+notificationTab.addEventListener('click', () => {
+    const isVisible = notificationPopup.style.display === 'block';
+    notificationPopup.style.display = isVisible ? 'none' : 'block';
+});
+
+// Sample notifications
+const notifications = [
+    "Pantry A has been updated.",
+    "New items added to Pantry B.",
+    "Your pantry selections have been saved.",
+];
+
+// Populate the notification list
+function loadNotifications() {
+    notifications.forEach(notification => {
+        const listItem = document.createElement('li');
+        listItem.textContent = notification;
+        notificationList.appendChild(listItem);
+    });
+}
+
+// Load notifications on page load
+loadNotifications();
+
 async function main() {
   if (UsersName) {
       dashboard_title.textContent = `Welcome ${UsersName}`;
