@@ -205,6 +205,38 @@ app.get('/GetFavoritedItems', async (req, res) => {
     }
 });
 
+// Routing to get notifications
+app.get('/GetNotifications', async (req, res) => {
+    console.log('Current session user:', req.session.currentUser);  // Log session to check
+    try {
+        if (!req.session.currentUser?.Email) {
+            return res.status(400).send('No email in session');
+        }
+        let info = await db.getUserNotifications(req.session.currentUser.Email);
+        res.json(info);
+    } catch (error) {
+        console.error('Error retrieving notification information:', error);  // Log the error for better insight
+        res.status(500).send('Error retrieving notification information');
+    }
+});
+
+
+// Routing to remove notifications
+app.post('/RemoveNotifications', async (req, res) => {
+    const { notificationIds } = req.body;
+    try {
+        const result = await db.removeNotifications(notificationIds);
+        if (!result) {
+            res.status(500).send('Error removing notifications');
+        } else {
+            res.status(200).send('Notifications removed successfully');
+        }
+    } catch (error) {
+        console.error('Error removing notifications:', error);
+        res.status(500).send('Error removing notifications');
+    }
+});
+
 // Route to handle cleanup request
 app.post('/cleanup', (req, res) => {
     if (req.session.currentUser) {

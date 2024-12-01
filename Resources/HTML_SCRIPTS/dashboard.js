@@ -16,19 +16,46 @@ notificationTab.addEventListener('click', () => {
 });
 
 // Sample notifications
-const notifications = [
-    "Your Item (Food Name) has been restocked at (PantryName).",
-    "New items added to Pantry B.",
-    "Your pantry selections have been saved.",
-];
+// const notifications = [
+//     "Your Item (Food Name) has been restocked at (PantryName).",
+//     "New items added to Pantry B.",
+//     "Your pantry selections have been saved.",
+// ];
 
 // Populate the notification list
-function loadNotifications() {
-    notifications.forEach(notification => {
-        const listItem = document.createElement('li');
-        listItem.textContent = notification;
-        notificationList.appendChild(listItem);
-    });
+async function loadNotifications() {
+    console.log('notifications loading...');
+    try {
+        const response = await fetch('/GetNotifications');
+// Log the response text to see what's being returned
+        const text = await response.text();
+        console.log('Response text:', text);
+        
+        // Check if the response is OK before attempting to parse it as JSON
+        if (!response.ok) {
+            throw new Error('Failed to fetch notifications: ' + text);
+        }
+        
+        // If we get here, the response should be in JSON format
+        const notifications = JSON.parse(text);
+        console.log('Notifications:', notifications);  // Log notifications
+
+        const notificationList = document.getElementById('notificationList');
+        notificationList.innerHTML = ''; // Clear existing notifications
+        notifications.forEach(notification => {
+            let message = 't';
+            if (notification.TYPE === 1) {
+                message = `Your Item "${notification.FOOD_NAME}" has been restocked at ${notification.NAME}.`;
+            } else {
+                message = `Notification type ${notification.TYPE} for ${notification.FOOD_NAME}.`; // Placeholder for future types
+            }
+            const listItem = document.createElement('li');
+            listItem.textContent = message;
+            notificationList.appendChild(listItem);
+        });
+    } catch (error) {
+        console.error('Error loading notifications:', error);
+    }
 }
 
 // Load notifications on page load
