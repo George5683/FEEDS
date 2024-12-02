@@ -14,6 +14,11 @@ notificationTab.addEventListener('click', () => {
     const isVisible = notificationPopup.style.display === 'block';
     notificationPopup.style.display = isVisible ? 'none' : 'block';
 });
+// Close the notification popup when clicking the "X" button
+const closeButton = notificationPopup.querySelector('.close');
+closeButton.addEventListener('click', () => {
+    notificationPopup.style.display = 'none'; // Hide the popup when "X" is clicked
+});
 
 // Sample notifications
 // const notifications = [
@@ -43,14 +48,34 @@ async function loadNotifications() {
         const notificationList = document.getElementById('notificationList');
         notificationList.innerHTML = ''; // Clear existing notifications
         notifications.forEach(notification => {
-            let message = 't';
+            let message = 'Error';
             if (notification.TYPE === 1) {
                 message = `Your Item "${notification.FOOD_NAME}" has been restocked at ${notification.NAME}.`;
             } else {
                 message = `Notification type ${notification.TYPE} for ${notification.FOOD_NAME}.`; // Placeholder for future types
             }
             const listItem = document.createElement('li');
-            listItem.textContent = message;
+            listItem.textContent = `${message}          ${new Date(notification.TIMESTAMP).toLocaleString()}`;
+            // "Delete" button
+            const closeButton = document.createElement('button');
+            closeButton.textContent = 'Delete';
+            closeButton.classList.add('del'); // Style this with CSS
+            closeButton.addEventListener('click', async () => {
+                try {
+                    // call the API to delete the notification
+                    const deleteResponse = await fetch(`/DeleteNotification/${notification.ID}`, {
+                        method: 'DELETE',
+                    });
+                    if (deleteResponse.ok) {
+                        listItem.remove();
+                    } else {
+                        console.error('Failed to delete notification.');
+                    }
+                } catch (error) {
+                    console.error('Error deleting notification:', error);
+                }
+            });
+            listItem.appendChild(closeButton);
             notificationList.appendChild(listItem);
         });
     } catch (error) {
@@ -138,7 +163,7 @@ function showPopup(pantryName, pantryLocation, pantryEmail) {
     infoI.alt = `${pantryName} Image`;
     document.getElementById("infoImage").innerHTML = `<img src="../Images/${pantryName}.png" alt="${pantryName} Image">`;
   //close the modal when clicking on <span> (x)
-  let closeBtn = document.querySelector(".close");
+  let closeBtn = modal.querySelector(".close");
   closeBtn.addEventListener('click', () => {
     document.getElementById("popupModal").style.display = "none";
     });

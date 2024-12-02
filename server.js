@@ -207,7 +207,7 @@ app.get('/GetFavoritedItems', async (req, res) => {
 
 // Routing to get notifications
 app.get('/GetNotifications', async (req, res) => {
-    console.log('Current session user:', req.session.currentUser);  // Log session to check
+    // console.log('Current session user:', req.session.currentUser);  // Log session to check
     try {
         if (!req.session.currentUser?.Email) {
             return res.status(400).send('No email in session');
@@ -220,20 +220,15 @@ app.get('/GetNotifications', async (req, res) => {
     }
 });
 
-
-// Routing to remove notifications
-app.post('/RemoveNotifications', async (req, res) => {
-    const { notificationIds } = req.body;
+// Routing to delete a notification
+app.delete('/DeleteNotification/:id', async (req, res) => {
+    const notificationId = req.params.id;
     try {
-        const result = await db.removeNotifications(notificationIds);
-        if (!result) {
-            res.status(500).send('Error removing notifications');
-        } else {
-            res.status(200).send('Notifications removed successfully');
-        }
+        await db.deleteNotification(notificationId); 
+        res.status(200).send('Notification deleted');
     } catch (error) {
-        console.error('Error removing notifications:', error);
-        res.status(500).send('Error removing notifications');
+        console.error('Error deleting notification:', error);
+        res.status(500).send('Error deleting notification');
     }
 });
 

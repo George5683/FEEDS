@@ -265,10 +265,11 @@ async function updateItemStatus(pantryName, foodName, status) {
                 [foodId]
             );            
             //add notification for each user
+            const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
             for (const user of userResults) {
                 await pool.query(
-                    `INSERT INTO USER_NOTIFICATIONS (USER_ID, FOOD_NAME, TYPE, NAME) VALUES (?, ?, 1, ?)`,
-                    [user.USER_ID, foodName, pantryName]
+                    `INSERT INTO USER_NOTIFICATIONS (USER_ID, FOOD_NAME, TYPE, NAME, TIMESTAMP) VALUES (?, ?, 1, ?, ?)`,
+                    [user.USER_ID, foodName, pantryName, timestamp]
                 );
             }
         }
@@ -423,9 +424,8 @@ async function getUserNotifications(email) {
             console.error('No USER_ID found for email:', email);
             return [];  // No USER_ID, return an empty array
         }
-
         const [notifications] = await pool.query(
-            'SELECT * FROM USER_NOTIFICATIONS WHERE USER_ID = ?',
+            'SELECT * FROM USER_NOTIFICATIONS WHERE USER_ID = ? ORDER BY TIMESTAMP DESC',
             [userId]
         );
         return notifications;
@@ -435,21 +435,10 @@ async function getUserNotifications(email) {
     }
 }
 
-
-//Function to remove notifications
-async function removeNotifications(notificationIds) {
-    try {
-        // Delete notifications by ID
-        await pool.query(
-            'DELETE FROM USER_NOTIFICATIONS WHERE id IN (?)',
-            [notificationIds]
-        );
-        console.log('Notifications removed successfully!');
-        return true;
-    } catch (error) {
-        console.error('Error removing notifications:', error);
-        return false;
-    }
+// Function to delete notifications when X'd out
+async function deleteNotification(notificationId) {
+    const query = `DELETE FROM USER_NOTIFICATIONS WHERE ID = ?`;
+    await pool.query(query, [notificationId]);
 }
 
 
@@ -471,5 +460,5 @@ module.exports = {
     removeFavoritedItem,
     getFavoritedItems,
     getUserNotifications,
-    removeNotifications
+    deleteNotification
 };

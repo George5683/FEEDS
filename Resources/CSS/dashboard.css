@@ -10,6 +10,8 @@ body {
 }
 
 .topnav {
+  display: flex;
+  justify-content: space-between;
   background-color: #4e8f58;
   overflow: hidden;
   width: 100%;
@@ -192,15 +194,29 @@ button:hover {
     cursor: pointer;
   }
 
+  .logout-tab {
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    cursor: pointer;
+  }
+  
+  .logout-tab:hover {
+    background-color: #101827;
+    color: white;
+  }
+
   /* Notification tab styles */
 .notification-tab {
-  float: right; /* Align to the right */
   color: #f2f2f2;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
   cursor: pointer;
+  margin-left: auto;
 }
 
 .notification-tab:hover {
@@ -236,7 +252,40 @@ button:hover {
 }
 
 .notification-popup ul li {
-  margin-bottom: 10px;
   font-size: 16px;
   color: #101827;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  position: relative;
+  border-bottom: 1px solid gray;
 }
+
+.notification-popup ul li:hover {
+  background-color: #e5e5e5;
+}
+
+/* Notification text takes 70% of the width */
+.notification-popup ul li .notification-text {
+  flex-basis: 70%;
+  word-wrap: break-word;
+}
+
+/* Delete button (right side) */
+.del {
+  color: white;
+  border: none;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  /* cool color transition to be used on other stuff maybe? transition: background-color 0.3s; */
+}
+
+.del:hover {
+  background-color: darkred;
+}
+
