@@ -4,6 +4,9 @@ const container = document.querySelector('.container'); // Container where pantr
 // Get the query parameter from the URL
 const urlParams = new URLSearchParams(window.location.search);
 const UsersName = urlParams.get('name');
+let userinfo1;
+
+
 
 const notificationTab = document.getElementById('notification-tab');
 const notificationPopup = document.getElementById('notificationPopup');
@@ -83,12 +86,27 @@ async function loadNotifications() {
     }
 }
 
+async function getUserInfo(){
+    try{
+        const response = await fetch('/GetUserInfo');
+        userinfo1 = await response.json();
+        console.log('User Info:', userinfo1.NAME);
+    } catch (error) {
+        console.error('Error getting user info:', error);
+    }
+}
+
 // Load notifications on page load
 loadNotifications();
 
 async function main() {
-  if (UsersName) {
+
+  if (UsersName != null) {
       dashboard_title.textContent = `Welcome ${UsersName}`;
+  }
+  else{
+        await getUserInfo();
+        dashboard_title.textContent = `Welcome ${userinfo1.NAME}`;
   }
 
   try {

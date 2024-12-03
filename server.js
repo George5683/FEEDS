@@ -6,6 +6,7 @@ const db = require('./db.js'); // Importing db functions
 
 const app = express();
 const PORT = 8005;
+let user;
 
 // Middleware to parse JSON and URL-encoded bodies
 app.use(express.json());
@@ -65,11 +66,13 @@ app.post('/SignInUser', async (req, res) => {
         const possiblePantry = await db.verifyPantry(email, password);
         if (userInfo) {
             req.session.currentUser = new OrdinaryUser(userInfo.NAME, email, password, userInfo.ZIP_CODE, userInfo.USERNAME);
+            user = req.session.currentUser;
             res.json({ name: req.session.currentUser.getName(),
                     user: true
                 });
         } else if (possiblePantry) {
             req.session.currentUser = new PantryUser(possiblePantry.NAME, email, password, possiblePantry.ZIP_CODE, possiblePantry.USERNAME);
+            user = req.session.currentUser;
             res.json({ name: req.session.currentUser.getName(),
                     user: false
                 });
@@ -229,6 +232,20 @@ app.delete('/DeleteNotification/:id', async (req, res) => {
     } catch (error) {
         console.error('Error deleting notification:', error);
         res.status(500).send('Error deleting notification');
+    }
+});
+
+// Routing to get user information
+app.get('/GetUserInfo', async (req, res) => {
+    try {
+        if (!req.session.currentUser?.Email) {
+            return res.status(400).send('No email in session');
+        }
+
+        res.json({ NAME: user.getName()});
+    } catch (error) {
+        console.error('Error retrieving user information:', error);
+        res.status(500).send('Error retrieving user information');
     }
 });
 
