@@ -69,6 +69,16 @@ async function main() {
 
 main();
 
+dropDown.addEventListener('mouseover', () => {
+    dropDown.textContent = "Item Browser";
+    document.getElementById("dropDownItems").style.display = "block";
+});
+
+dropDiv.addEventListener('mouseleave', () => {
+    dropDown.textContent = "Item Browser \u2193";
+    document.getElementById("dropDownItems").style.display = "none";
+});
+
 function showPopup(pantryName, pantryLocation, pantryEmail) {
     // Get the modal
     let modal = document.getElementById("popupModal");    // display the modal
