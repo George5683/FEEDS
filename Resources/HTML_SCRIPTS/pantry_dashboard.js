@@ -80,9 +80,13 @@ async function main(){
         updateStockDisplay(this.value, pantryName, itemName);
       };
     }
-    function updateStockDisplay(sliderValue, pantryName, itemName) {
+
+    async function updateStockDisplay(sliderValue, pantryName, itemName) {
         const stockStatus = sliderValue === "2" ? "LOW STOCK" : sliderValue === "1" ? "NONE" : "IN STOCK";
         document.getElementById("itemStock").textContent = stockStatus;
+
+
+
         updateItemStatusInDatabase(pantryName, itemName, stockStatus);
     }
 
@@ -112,6 +116,15 @@ async function main(){
             if (response.ok) {
                 console.log(`Successfully updated ${itemName} to ${stockStatus}`);
                 document.getElementById("itemStock").textContent = stockStatus;
+
+                // Dynamically update the table
+              const bTable = document.getElementById("browserTable");
+              for (let row of bTable.rows) {
+                if (row.cells[0].textContent.includes(itemName)) { // Match the item name
+                    row.cells[1].textContent = stockStatus; // Update the status column
+                    break;
+                }
+            }
             } else {
                 alert('Failed to update item status');
             }

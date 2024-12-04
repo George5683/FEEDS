@@ -87,7 +87,9 @@ margin-right: 20px;
 .topnav {
   background-color: #4e8f58;
   overflow: hidden;
-  width: 100%
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 /* Style the links inside the navigation bar */
 .topnav a {
@@ -107,6 +109,21 @@ margin-right: 20px;
 
 /* Add a color to the active/current link */
 .topnav a.active {
+  background-color: #101827;
+  color: white;
+}
+
+.logout-tab {
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.logout-tab:hover {
   background-color: #101827;
   color: white;
 }

@@ -6,6 +6,7 @@ const db = require('./db.js'); // Importing db functions
 
 const app = express();
 const PORT = 8005;
+let user;
 
 // Middleware to parse JSON and URL-encoded bodies
 app.use(express.json());
@@ -65,11 +66,13 @@ app.post('/SignInUser', async (req, res) => {
         const possiblePantry = await db.verifyPantry(email, password);
         if (userInfo) {
             req.session.currentUser = new OrdinaryUser(userInfo.NAME, email, password, userInfo.ZIP_CODE, userInfo.USERNAME);
+            user = req.session.currentUser;
             res.json({ name: req.session.currentUser.getName(),
                     user: true
                 });
         } else if (possiblePantry) {
             req.session.currentUser = new PantryUser(possiblePantry.NAME, email, password, possiblePantry.ZIP_CODE, possiblePantry.USERNAME);
+            user = req.session.currentUser;
             res.json({ name: req.session.currentUser.getName(),
                     user: false
                 });
@@ -202,6 +205,47 @@ app.get('/GetFavoritedItems', async (req, res) => {
         
     } catch (error) {
         res.status(500).send('Error retrieving favorited items');
+    }
+});
+
+// Routing to get notifications
+app.get('/GetNotifications', async (req, res) => {
+    // console.log('Current session user:', req.session.currentUser);  // Log session to check
+    try {
+        if (!req.session.currentUser?.Email) {
+            return res.status(400).send('No email in session');
+        }
+        let info = await db.getUserNotifications(req.session.currentUser.Email);
+        res.json(info);
+    } catch (error) {
+        console.error('Error retrieving notification information:', error);  // Log the error for better insight
+        res.status(500).send('Error retrieving notification information');
+    }
+});
+
+// Routing to delete a notification
+app.delete('/DeleteNotification/:id', async (req, res) => {
+    const notificationId = req.params.id;
+    try {
+        await db.deleteNotification(notificationId); 
+        res.status(200).send('Notification deleted');
+    } catch (error) {
+        console.error('Error deleting notification:', error);
+        res.status(500).send('Error deleting notification');
+    }
+});
+
+// Routing to get user information
+app.get('/GetUserInfo', async (req, res) => {
+    try {
+        if (!req.session.currentUser?.Email) {
+            return res.status(400).send('No email in session');
+        }
+
+        res.json({ NAME: user.getName()});
+    } catch (error) {
+        console.error('Error retrieving user information:', error);
+        res.status(500).send('Error retrieving user information');
     }
 });
 

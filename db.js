@@ -158,7 +158,6 @@ async function verifyUser(email, password) {
             results[0].NAME = results[0].NAME.charAt(0).toUpperCase() + results[0].NAME.slice(1).toLowerCase();
             return results[0]; // Return user info to be stored
         }
-        console.log('User not found!');
         return null;
     } catch (error) {
         console.error('Error verifying user on server side:', error);
@@ -246,6 +245,34 @@ async function updateItemStatus(pantryName, foodName, status) {
     try {
         await pool.query(`UPDATE ${mysql.escapeId(pantryName)} SET STATUS = ? WHERE FOOD_NAME = ?`, [status, foodName]);
         console.log(`Status of ${foodName} in ${pantryName} updated to ${status} successfully!`);
+        if (status === 'IN STOCK' || status === 'LOW STOCK') {
+            //get FOOD_ID from the pantry table
+            const [itemResults] = await pool.query(
+                `SELECT FOOD_ID FROM \`${pantryName}\` WHERE FOOD_NAME = ?`,
+                [foodName]
+            );
+            const foodId = itemResults[0]?.FOOD_ID;
+            if (!foodId) {
+                console.error('Food ID not found');
+                return;
+            }
+            //find users who favorited this item
+            const [userResults] = await pool.query(
+                `SELECT UF.USER_ID, UI.EMAIL 
+                 FROM USER_FAVORITES UF
+                 JOIN USER_INFO UI ON UF.USER_ID = UI.USER_ID
+                 WHERE UF.FOOD_ID = ?`,
+                [foodId]
+            );            
+            //add notification for each user
+            const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            for (const user of userResults) {
+                await pool.query(
+                    `INSERT INTO USER_NOTIFICATIONS (USER_ID, FOOD_NAME, TYPE, NAME, TIMESTAMP) VALUES (?, ?, 1, ?, ?)`,
+                    [user.USER_ID, foodName, pantryName, timestamp]
+                );
+            }
+        }
     } catch (error) {
         console.error('Error updating item status:', error);
     }
@@ -384,6 +411,37 @@ async function getFavoritedItems(email) {
     }
 }
 
+// Function to get user notifications
+async function getUserNotifications(email) {
+    try {
+        const [userResults] = await pool.query(
+            'SELECT USER_ID FROM USER_INFO WHERE EMAIL = ?',
+            [email]
+        );
+        console.log('Notification info retrieved for displaying on dashboard!');
+        const userId = userResults[0]?.USER_ID;
+        if (!userId) {
+            console.error('No USER_ID found for email:', email);
+            return [];  // No USER_ID, return an empty array
+        }
+        const [notifications] = await pool.query(
+            'SELECT * FROM USER_NOTIFICATIONS WHERE USER_ID = ? ORDER BY TIMESTAMP DESC',
+            [userId]
+        );
+        return notifications;
+    } catch (error) {
+        console.error('Error fetching user notifications:', error);
+        return [];
+    }
+}
+
+// Function to delete notifications when X'd out
+async function deleteNotification(notificationId) {
+    const query = `DELETE FROM USER_NOTIFICATIONS WHERE ID = ?`;
+    await pool.query(query, [notificationId]);
+}
+
+
 module.exports = {
     addUser,
     deleteUser,
@@ -401,4 +459,6 @@ module.exports = {
     insertFavoritedItem,
     removeFavoritedItem,
     getFavoritedItems,
+    getUserNotifications,
+    deleteNotification
 };
