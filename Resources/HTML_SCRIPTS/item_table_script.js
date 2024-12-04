@@ -489,3 +489,13 @@ async function GetID(FoodName){
 }
 
 main();
+
+dropDown.addEventListener('mouseover', () => {
+  dropDown.textContent = "Item Browser";
+  document.getElementById("dropDownItems").style.display = "block";
+});
+
+dropDiv.addEventListener('mouseleave', () => {
+  dropDown.textContent = "Item Browser \u2193";
+  document.getElementById("dropDownItems").style.display = "none";
+});
