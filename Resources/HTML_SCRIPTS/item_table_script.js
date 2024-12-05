@@ -146,7 +146,7 @@ async function main() {
       responseData.sort(dynamicSort("FOOD_NAME"));
       itemTitle.textContent = 'Item: \u2193';
       for (let i = 0; i < responseData.length; i++) {
-        await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
+        await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].DATE, responseData[i].FOOD_ID);
       }
     }
 
@@ -223,12 +223,12 @@ async function refresh(col, direction) {
         if (direction == 0) {
           itemTitle.textContent = 'Item: \u2193';
           for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].DATE, responseData[i].FOOD_ID);
           }
         } else if (direction == 1) {
           itemTitle.textContent = 'Item: \u2191';
           for (let i = responseData.length - 1; i >= 0; i--) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].DATE, responseData[i].FOOD_ID);
           }
         }
       } else if (col == 1) {   // Sort by Stock
@@ -249,24 +249,24 @@ async function refresh(col, direction) {
         if (direction == 0) {
           stockTitle.textContent = 'In Stock: \u2193';
           for (let i = 0; i < inStock.length; i++) {
-            await addRow(inStock[i].FOOD_NAME, inStock[i].STATUS, inStock[i].FOOD_ID);
+            await addRow(inStock[i].FOOD_NAME, inStock[i].STATUS, inStock[i].DATE, inStock[i].FOOD_ID);
           }
           for (let i = 0; i < lowStock.length; i++) {
-            await addRow(lowStock[i].FOOD_NAME, lowStock[i].STATUS, lowStock[i].FOOD_ID);
+            await addRow(lowStock[i].FOOD_NAME, lowStock[i].STATUS, lowStock[i].DATE, lowStock[i].FOOD_ID);
           }
           for (let i = 0; i < noStock.length; i++) {
-            await addRow(noStock[i].FOOD_NAME, noStock[i].STATUS, noStock[i].FOOD_ID);
+            await addRow(noStock[i].FOOD_NAME, noStock[i].STATUS, noStock[i].DATE, noStock[i].FOOD_ID);
           }
         } else if (direction == 1) {
           stockTitle.textContent = 'In Stock: \u2191';
           for (let i = 0; i < noStock.length; i++) {
-            await addRow(noStock[i].FOOD_NAME, noStock[i].STATUS, noStock[i].FOOD_ID);
+            await addRow(noStock[i].FOOD_NAME, noStock[i].STATUS, noStock[i].DATE, noStock[i].FOOD_ID);
           }
           for (let i = 0; i < lowStock.length; i++) {
-            await addRow(lowStock[i].FOOD_NAME, lowStock[i].STATUS, lowStock[i].FOOD_ID);
+            await addRow(lowStock[i].FOOD_NAME, lowStock[i].STATUS, noStock[i].DATE, lowStock[i].FOOD_ID);
           }
           for (let i = 0; i < inStock.length; i++) {
-            await addRow(inStock[i].FOOD_NAME, inStock[i].STATUS, inStock[i].FOOD_ID);
+            await addRow(inStock[i].FOOD_NAME, inStock[i].STATUS, noStock[i].DATE, inStock[i].FOOD_ID);
           }
         }
       } else if (col == 2) {   // Sort by Date
@@ -274,12 +274,12 @@ async function refresh(col, direction) {
         if (direction == 0) {
           dateTitle.textContent = 'Last Stocked Date: \u2193';
           for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].DATE, responseData[i].FOOD_ID);
           }
         } else if (direction == 1) {
           dateTitle.textContent = 'Last Stocked Date: \u2191';
           for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].DATE, responseData[i].FOOD_ID);
           }
         }
 
@@ -298,24 +298,24 @@ async function refresh(col, direction) {
         if (direction == 0) {
           favoriteTitle.textContent = 'Favorite Item: \u2193';
           for (let i = 0; i < favList.length; i++) {
-            await addRow(favList[i].FOOD_NAME, favList[i].STATUS, favList[i].FOOD_ID);
+            await addRow(favList[i].FOOD_NAME, favList[i].STATUS, favList[i].DATE, favList[i].FOOD_ID);
           }
           for (let i = 0; i < notFavList.length; i++) {
-            await addRow(notFavList[i].FOOD_NAME, notFavList[i].STATUS, notFavList[i].FOOD_ID);
+            await addRow(notFavList[i].FOOD_NAME, notFavList[i].STATUS, notFavList[i].DATE, notFavList[i].FOOD_ID);
           }
         } else if (direction == 1) {
           favoriteTitle.textContent = 'Favorite Item: \u2191';
           for (let i = 0; i < notFavList.length; i++) {
-            await addRow(notFavList[i].FOOD_NAME, notFavList[i].STATUS, notFavList[i].FOOD_ID);
+            await addRow(notFavList[i].FOOD_NAME, notFavList[i].STATUS, notFavList[i].DATE, notFavList[i].FOOD_ID);
           }
           for (let i = 0; i < favList.length; i++) {
-            await addRow(favList[i].FOOD_NAME, favList[i].STATUS, favList[i].FOOD_ID);
+            await addRow(favList[i].FOOD_NAME, favList[i].STATUS, favList[i].DATE, favList[i].FOOD_ID);
           }
         }
       } else {
         itemTitle.textContent = 'Item: \u2193';
         for (let i = 0; i < responseData.length; i++) {
-          await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
+          await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].DATE, responseData[i].FOOD_ID);
         }
       }
     }
@@ -327,7 +327,7 @@ async function refresh(col, direction) {
 
 }
 
-async function addRow(name, status, id) {
+async function addRow(name, status, date, id) {
   let iName = name.split(' ').join('-');
   let bTable = document.getElementById("browserTable");
   let newRow = bTable.insertRow(-1);
@@ -341,7 +341,7 @@ async function addRow(name, status, id) {
   let nameText = document.createTextNode(name);
   let stockText = document.createTextNode(status);
   // !! Data not present in database!!!!
-  let dateText = document.createTextNode("11/02/2024");
+  let dateText = document.createTextNode(date);
 
   let favStar = document.createElement("span");
   favStar.classList.add("star");
@@ -365,13 +365,13 @@ async function addRow(name, status, id) {
   newFavorite.appendChild(Stars.getElement());
 
   newItem.addEventListener("click", async function () {
-    showPopup(name, status, "11/02/2024");
+    showPopup(name, status, date);
   });
   newStock.addEventListener("click", async function () {
-    showPopup(name, status, "11/02/2024");
+    showPopup(name, status, date);
   });
   newDate.addEventListener("click", async function () {
-    showPopup(name, status, "11/02/2024");
+    showPopup(name, status, date);
   });
 }
 
