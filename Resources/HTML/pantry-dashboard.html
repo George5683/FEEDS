@@ -11,6 +11,7 @@
 <body>
     <div class="welcome-text">
         <h1 id = PantryNamePlaceHolder>[Pantry Name]</h1>
+        <button class="logout-button" onclick="window.location.href='/'">Logout</button>        
         <h2>Here you can update your stock for each of your items.</h2>
 
     </div>
@@ -31,6 +32,7 @@
         <p>Last Stocked Date: <span id="itemDate"></span></p>
         <label for="stockSlider">Change Stock Status:</label>
         <input type="range" id="stockSlider" min="1" max="3" step="1">
+        <button id="saveStockStatus" class="save-button">Save</button>
       </div>
     </div>
     <script src="../HTML_SCRIPTS/pantry_dashboard.js"></script>

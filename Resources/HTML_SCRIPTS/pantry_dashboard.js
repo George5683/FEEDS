@@ -77,16 +77,17 @@ async function main(){
       else sliderValue = "1";
       document.getElementById("stockSlider").value = sliderValue;
       document.getElementById("stockSlider").oninput = function() {
-        updateStockDisplay(this.value, pantryName, itemName);
+        const stockStatus = this.value === "2" ? "LOW STOCK" : this.value === "1" ? "NONE" : "IN STOCK";
+        document.getElementById("itemStock").textContent = stockStatus;
+      };
+      document.getElementById("saveStockStatus").onclick = function() {
+        const sliderValue = document.getElementById("stockSlider").value;
+        const stockStatus = sliderValue === "2" ? "LOW STOCK" : sliderValue === "1" ? "NONE" : "IN STOCK";
+        updateStockDisplay(stockStatus, pantryName, itemName);
       };
     }
 
-    async function updateStockDisplay(sliderValue, pantryName, itemName) {
-        const stockStatus = sliderValue === "2" ? "LOW STOCK" : sliderValue === "1" ? "NONE" : "IN STOCK";
-        document.getElementById("itemStock").textContent = stockStatus;
-
-
-
+    async function updateStockDisplay(stockStatus, pantryName, itemName) {
         updateItemStatusInDatabase(pantryName, itemName, stockStatus);
     }
 
