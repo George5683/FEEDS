@@ -146,6 +146,7 @@ async function main() {
       responseData.sort(dynamicSort("FOOD_NAME"));
       itemTitle.textContent = 'Item: \u2193';
       for (let i = 0; i < responseData.length; i++) {
+        console.log(responseData[i].DATE);
         await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].DATE, responseData[i].FOOD_ID);
       }
     }
