@@ -146,12 +146,7 @@ async function main() {
       responseData.sort(dynamicSort("FOOD_NAME"));
       itemTitle.textContent = 'Item: \u2193';
       for (let i = 0; i < responseData.length; i++) {
-        let fDate = responseData[i].DATE;
-        if (fDate != null) {
-          fDate = fDate.substring(0, 10);
-          let dateValues = fDate.split("-");
-          fDate = dateValues[1] + "/" + dateValues[2] + "/" + dateValues[0];
-        }
+        let fDate = fixDate(responseData[i].DATE);
         await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, fDate, responseData[i].FOOD_ID);
       }
     }
@@ -229,12 +224,14 @@ async function refresh(col, direction) {
         if (direction == 0) {
           itemTitle.textContent = 'Item: \u2193';
           for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].DATE, responseData[i].FOOD_ID);
+            let fDate = fixDate(responseData[i].DATE);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, fDate, responseData[i].FOOD_ID);
           }
         } else if (direction == 1) {
           itemTitle.textContent = 'Item: \u2191';
           for (let i = responseData.length - 1; i >= 0; i--) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].DATE, responseData[i].FOOD_ID);
+            let fDate = fixDate(responseData[i].DATE);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, fDate, responseData[i].FOOD_ID);
           }
         }
       } else if (col == 1) {   // Sort by Stock
@@ -255,24 +252,30 @@ async function refresh(col, direction) {
         if (direction == 0) {
           stockTitle.textContent = 'In Stock: \u2193';
           for (let i = 0; i < inStock.length; i++) {
-            await addRow(inStock[i].FOOD_NAME, inStock[i].STATUS, inStock[i].DATE, inStock[i].FOOD_ID);
+            let fDate = fixDate(inStock[i].DATE);
+            await addRow(inStock[i].FOOD_NAME, inStock[i].STATUS, fDate, inStock[i].FOOD_ID);
           }
           for (let i = 0; i < lowStock.length; i++) {
-            await addRow(lowStock[i].FOOD_NAME, lowStock[i].STATUS, lowStock[i].DATE, lowStock[i].FOOD_ID);
+            let fDate = fixDate(lowStock[i].DATE);
+            await addRow(lowStock[i].FOOD_NAME, lowStock[i].STATUS, fDate, lowStock[i].FOOD_ID);
           }
           for (let i = 0; i < noStock.length; i++) {
-            await addRow(noStock[i].FOOD_NAME, noStock[i].STATUS, noStock[i].DATE, noStock[i].FOOD_ID);
+            let fDate = fixDate(noStock[i].DATE);
+            await addRow(noStock[i].FOOD_NAME, noStock[i].STATUS, fDate, noStock[i].FOOD_ID);
           }
         } else if (direction == 1) {
           stockTitle.textContent = 'In Stock: \u2191';
           for (let i = 0; i < noStock.length; i++) {
-            await addRow(noStock[i].FOOD_NAME, noStock[i].STATUS, noStock[i].DATE, noStock[i].FOOD_ID);
+            let fDate = fixDate(noStock[i].DATE);
+            await addRow(noStock[i].FOOD_NAME, noStock[i].STATUS, fDate, noStock[i].FOOD_ID);
           }
           for (let i = 0; i < lowStock.length; i++) {
-            await addRow(lowStock[i].FOOD_NAME, lowStock[i].STATUS, noStock[i].DATE, lowStock[i].FOOD_ID);
+            let fDate = fixDate(lowStock[i].DATE);
+            await addRow(lowStock[i].FOOD_NAME, lowStock[i].STATUS, fDate, lowStock[i].FOOD_ID);
           }
           for (let i = 0; i < inStock.length; i++) {
-            await addRow(inStock[i].FOOD_NAME, inStock[i].STATUS, noStock[i].DATE, inStock[i].FOOD_ID);
+            let fDate = fixDate(inStock[i].DATE);
+            await addRow(inStock[i].FOOD_NAME, inStock[i].STATUS, fDate, inStock[i].FOOD_ID);
           }
         }
       } else if (col == 2) {   // Sort by Date
@@ -280,12 +283,14 @@ async function refresh(col, direction) {
         if (direction == 0) {
           dateTitle.textContent = 'Last Stocked Date: \u2193';
           for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].DATE, responseData[i].FOOD_ID);
+            let fDate = fixDate(responseData[i].DATE);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, fDate, responseData[i].FOOD_ID);
           }
         } else if (direction == 1) {
           dateTitle.textContent = 'Last Stocked Date: \u2191';
           for (let i = 0; i < responseData.length; i++) {
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].DATE, responseData[i].FOOD_ID);
+            let fDate = fixDate(responseData[i].DATE);
+            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, fDate, responseData[i].FOOD_ID);
           }
         }
 
@@ -304,24 +309,30 @@ async function refresh(col, direction) {
         if (direction == 0) {
           favoriteTitle.textContent = 'Favorite Item: \u2193';
           for (let i = 0; i < favList.length; i++) {
-            await addRow(favList[i].FOOD_NAME, favList[i].STATUS, favList[i].DATE, favList[i].FOOD_ID);
+            let fDate = fixDate(favList[i].DATE);
+            await addRow(favList[i].FOOD_NAME, favList[i].STATUS, fDate, favList[i].FOOD_ID);
           }
           for (let i = 0; i < notFavList.length; i++) {
-            await addRow(notFavList[i].FOOD_NAME, notFavList[i].STATUS, notFavList[i].DATE, notFavList[i].FOOD_ID);
+            let fDate = fixDate(notFavList[i].DATE);
+            await addRow(notFavList[i].FOOD_NAME, notFavList[i].STATUS, fDate, notFavList[i].FOOD_ID);
           }
         } else if (direction == 1) {
           favoriteTitle.textContent = 'Favorite Item: \u2191';
           for (let i = 0; i < notFavList.length; i++) {
-            await addRow(notFavList[i].FOOD_NAME, notFavList[i].STATUS, notFavList[i].DATE, notFavList[i].FOOD_ID);
+            let fDate = fixDate(notFavList[i].DATE);
+            await addRow(notFavList[i].FOOD_NAME, notFavList[i].STATUS, fDate, notFavList[i].FOOD_ID);
           }
           for (let i = 0; i < favList.length; i++) {
-            await addRow(favList[i].FOOD_NAME, favList[i].STATUS, favList[i].DATE, favList[i].FOOD_ID);
+            let fDate = fixDate(favList[i].DATE);
+            await addRow(favList[i].FOOD_NAME, favList[i].STATUS, fDate, favList[i].FOOD_ID);
           }
         }
       } else {
         itemTitle.textContent = 'Item: \u2193';
         for (let i = 0; i < responseData.length; i++) {
-          await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].DATE, responseData[i].FOOD_ID);
+          let fDate = responseData[i].DATE;
+          fixDate(fDate);
+          await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, fDate, responseData[i].FOOD_ID);
         }
       }
     }
@@ -516,4 +527,15 @@ function dynamicSort(property) {
       var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
       return result * sortOrder;
   }
+}
+
+function fixDate(fxDate) {
+  if (fxDate != null) {
+    fxDate = fxDate.substring(0, 10);
+    let dateValues = fxDate.split("-");
+    fxDate = dateValues[1] + "/" + dateValues[2] + "/" + dateValues[0];
+  } else {
+    fxDate = "None";
+  }
+  return fxDate;
 }
