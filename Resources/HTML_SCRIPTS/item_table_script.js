@@ -124,7 +124,6 @@ async function main() {
 
   // Use the pantryName value
   if (pantryName) {
-      console.log(`Selected Pantry: ${pantryName}`);
       if (PantryNamePlaceHolder) {
           PantryNamePlaceHolder.textContent = `Pantry: ${pantryName}`;
       }
@@ -144,6 +143,7 @@ async function main() {
     const responseData = await response.json();
 
     if (response.ok) {
+      responseData.sort(dynamicSort("FOOD_NAME"));
       itemTitle.textContent = 'Item: \u2193';
       for (let i = 0; i < responseData.length; i++) {
         await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
@@ -218,6 +218,7 @@ async function refresh(col, direction) {
     const responseData = await response.json();
 
     if (response.ok) {
+      responseData.sort(dynamicSort("FOOD_NAME"));
       if (col == 0) {   // Sort by Name 
         if (direction == 0) {
           itemTitle.textContent = 'Item: \u2193';
@@ -225,7 +226,6 @@ async function refresh(col, direction) {
             await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
           }
         } else if (direction == 1) {
-          console.log("Hi")
           itemTitle.textContent = 'Item: \u2191';
           for (let i = responseData.length - 1; i >= 0; i--) {
             await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, responseData[i].FOOD_ID);
@@ -499,3 +499,15 @@ dropDiv.addEventListener('mouseleave', () => {
   dropDown.textContent = "Item Browser \u2193";
   document.getElementById("dropDownItems").style.display = "none";
 });
+
+function dynamicSort(property) {
+  var sortOrder = 1;
+  if(property[0] === "-") {
+      sortOrder = -1;
+      property = property.substr(1);
+  }
+  return function (a,b) {
+      var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+      return result * sortOrder;
+  }
+}
