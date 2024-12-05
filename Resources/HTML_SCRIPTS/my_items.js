@@ -1,3 +1,89 @@
+class Star {
+    constructor(element, Favorited, name) {
+      this.element = element;
+      this.Favorited = Favorited;
+      this.name = name;
+      if (Favorited) {
+        this.element.classList.toggle("selected");
+        this.element.innerHTML = Favorited ? "&#9733;" : "&#9734;"; // &#9733; is a filled star
+      }
+      else{
+        this.element.innerHTML = Favorited ? "&#9733;" : "&#9734;"; // &#9733; is
+      }
+    }
+  
+    async toggle() {
+      this.Favorited = !this.Favorited;
+      this.element.classList.toggle("selected");
+      this.element.innerHTML = this.Favorited ? "&#9733;" : "&#9734;"; // &#9733; is a filled star
+    }
+  
+    async addClickListener() {
+      this.element.addEventListener('click', async () => {
+        let foodName = this.name;
+        if(this.Favorited){
+          let data = { foodName};
+          // Send a POST request to the server to update the favorited status
+          try {
+            const response = await fetch('/RemoveFavoritedItem', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            });
+  
+            const responseData = await response;
+        
+            if (responseData) {
+              // remove the item from the favorited array
+              let ID = GetID(foodName);
+              FavoritedItemsIndex.splice(FavoritedItemsIndex.indexOf(ID), 1);
+              
+              //console.log("Response is: " + JSON.stringify(responseData));
+              console.log("Removed favorited item successfully!");
+            } else {
+              alert('Error removing favorited item.');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('Error removing favorited item on server side');
+          }
+        }
+        else{
+          // Send a POST request to the server to update the favorited status
+          try {
+            let data = { foodName };
+            let response = await fetch('/InsertFavoritedItem', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            });
+  
+            let responseData = await response;
+        
+            if (response.ok) {
+              //console.log("Response is: " + JSON.stringify(responseData));
+              console.log("Added favorited item successfully!");
+            } else {
+              alert('Error adding favorited item.');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('Error adding favorited item on server side');
+          }
+        }
+        this.toggle();
+      });
+    }
+  
+    getElement(){
+      return this.element;
+    }
+  }
+
 let FavoritedItemsMap = new Map();
 let count = 0;
 let FavoritedItemsIndex = [];
@@ -22,7 +108,6 @@ async function main() {
           // Add the food name and food id to the map
           FavoritedItemsMap.set(data[i].FOOD_NAME, data[i].FOOD_ID);
         }
-        console.log(FavoritedItemsMap);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -57,6 +142,11 @@ async function main() {
 
 main();
 
+async function GetID(FoodName){
+    let FoodID = FavoritedItemsMap.get(FoodName);
+    return FoodID;
+  }
+
 function isFavorited(itemID){
     for(let i = 0; i < FavoritedItemsIndex.length; i++){
       if(itemID == FavoritedItemsIndex[i]){
@@ -72,14 +162,31 @@ function isFavorited(itemID){
     let mTable = document.getElementById("myTable");
     let newRow = mTable.insertRow(-1);
     let newItem = newRow.insertCell(0);
+    let newFavorite = newRow.insertCell(1);
     let newImage = document.createElement('img');
     newImage.src = `./Images/${iName}.png`;
     newImage.classList.add("foodimage");
     let nameText = document.createTextNode(name);
     // !! Data not present in database!!!!
 
+    let favStar = document.createElement("span");
+    favStar.classList.add("star");
+    favStar.setAttribute("data-item-id", "1");
+  
+    let Stars;
+
+    if(isFavorited(id)){
+        Stars = new Star(favStar, true, name);
+        Stars.addClickListener();
+      }
+      else{
+        Stars = new Star(favStar, false, name);
+        Stars.addClickListener();
+      }
+
     newItem.appendChild(newImage);
     newItem.appendChild(nameText);
+    newFavorite.appendChild(Stars.getElement());
 
   }
 
