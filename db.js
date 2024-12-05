@@ -272,6 +272,7 @@ async function updateItemStatus(pantryName, foodName, status) {
                     [user.USER_ID, foodName, pantryName, timestamp]
                 );
             }
+            await pool.query(`UPDATE ${mysql.escapeId(pantryName)} SET DATE = ? WHERE FOOD_NAME = ?`,[timestamp, foodName]);
         }
     } catch (error) {
         console.error('Error updating item status:', error);
