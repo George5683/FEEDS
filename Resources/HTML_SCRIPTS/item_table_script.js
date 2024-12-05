@@ -280,17 +280,35 @@ async function refresh(col, direction) {
         }
       } else if (col == 2) {   // Sort by Date
         // Currently not implemented
+        let noDate = [];
+        let hasDate = [];
+        for (let i = 0; i < responseData.length; i++) {
+          if (responseData[i].DATE != null) {
+            hasDate.push(responseData[i]);
+          }
+          else {
+            noDate.push(responseData[i]);
+          }
+        }
         if (direction == 0) {
           dateTitle.textContent = 'Last Stocked Date: \u2193';
-          for (let i = 0; i < responseData.length; i++) {
-            let fDate = fixDate(responseData[i].DATE);
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, fDate, responseData[i].FOOD_ID);
+          for (let i = 0; i < hasDate.length; i++) {
+            let fDate = fixDate(hasDate[i].DATE);
+            await addRow(hasDate[i].FOOD_NAME, hasDate[i].STATUS, fDate, hasDate[i].FOOD_ID);
+          }
+          for (let i = 0; i < noDate.length; i++) {
+            let fDate = fixDate(noDate[i].DATE);
+            await addRow(noDate[i].FOOD_NAME, noDate[i].STATUS, fDate, noDate[i].FOOD_ID);
           }
         } else if (direction == 1) {
           dateTitle.textContent = 'Last Stocked Date: \u2191';
-          for (let i = 0; i < responseData.length; i++) {
-            let fDate = fixDate(responseData[i].DATE);
-            await addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, fDate, responseData[i].FOOD_ID);
+          for (let i = 0; i < noDate.length; i++) {
+            let fDate = fixDate(noDate[i].DATE);
+            await addRow(noDate[i].FOOD_NAME, noDate[i].STATUS, fDate, noDate[i].FOOD_ID);
+          }
+          for (let i = 0; i < hasDate.length; i++) {
+            let fDate = fixDate(hasDate[i].DATE);
+            await addRow(hasDate[i].FOOD_NAME, hasDate[i].STATUS, fDate, hasDate[i].FOOD_ID);
           }
         }
 
