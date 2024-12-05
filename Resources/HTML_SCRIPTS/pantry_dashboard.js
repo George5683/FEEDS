@@ -29,7 +29,8 @@ async function main(){
   
       if (response.ok) {
         for (let i = 0; i < responseData.length; i++) {
-          addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, pantryName);
+          fDate = fixDate(responseData[i].DATE);
+          addRow(responseData[i].FOOD_NAME, responseData[i].STATUS, fDate, pantryName);
         }
       }
   
@@ -40,7 +41,7 @@ async function main(){
     
   }
 
-  function addRow(name, status, pantryName) {
+  function addRow(name, status, date, pantryName) {
     let iName = name.split(' ').join('-');
     let bTable = document.getElementById("browserTable");
     let newRow = bTable.insertRow(-1);
@@ -52,13 +53,13 @@ async function main(){
     newImage.classList.add("foodimage");
     let nameText = document.createTextNode(name);
     let stockText = document.createTextNode(status);
-    let dateText = document.createTextNode("11/02/2024");
+    let dateText = document.createTextNode(date);
     newItem.appendChild(newImage);
     newItem.appendChild(nameText);
     newStock.appendChild(stockText);
     newDate.appendChild(dateText);
     newRow.addEventListener("click", function() {
-      showPopup(name, status, "11/02/2024", pantryName);
+      showPopup(name, status, date, pantryName);
     });
   }
   
@@ -136,3 +137,28 @@ async function main(){
   
     main();
     
+    function fixDate(fxDate) {
+      console.log(fxDate);
+      if (fxDate != null) {
+        date = fxDate.substring(0, 13);
+        let dateValues = date.split("-");
+        let days = dateValues[2].split("T");
+        let time = days[1];
+        let d = days[0];
+        let dValue = parseInt(d);
+        let timeValue = parseInt(time);
+        if (timeValue < 5) {
+          dValue = dValue - 1;
+        }
+        console.log(timeValue);
+        console.log(dValue);
+        if (dValue > 9) {
+          date = dateValues[1] + "/" + dValue + "/" +  dateValues[0];
+        } else {
+          date = dateValues[1] + "/0" + dValue + "/" + dateValues[0];
+        }
+      } else {
+        date = "None";
+      }
+      return date;
+    }
