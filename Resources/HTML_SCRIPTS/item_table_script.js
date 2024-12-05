@@ -530,12 +530,27 @@ function dynamicSort(property) {
 }
 
 function fixDate(fxDate) {
+  console.log(fxDate);
   if (fxDate != null) {
-    fxDate = fxDate.substring(0, 10);
-    let dateValues = fxDate.split("-");
-    fxDate = dateValues[1] + "/" + dateValues[2] + "/" + dateValues[0];
+    date = fxDate.substring(0, 13);
+    let dateValues = date.split("-");
+    let days = dateValues[2].split("T");
+    let time = days[1];
+    let d = days[0];
+    let dValue = parseInt(d);
+    let timeValue = parseInt(time);
+    if (timeValue < 5) {
+      dValue = dValue - 1;
+    }
+    console.log(timeValue);
+    console.log(dValue);
+    if (dValue > 9) {
+      date = dateValues[1] + "/" + dValue + "/" +  dateValues[0];
+    } else {
+      date = dateValues[1] + "/0" + dValue + "/" + dateValues[0];
+    }
   } else {
-    fxDate = "None";
+    date = "None";
   }
-  return fxDate;
+  return date;
 }
