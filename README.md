@@ -7,6 +7,11 @@ This is the software engineering project.
 - Install mySQL (npm install mysql2)
 - install express-session (npm install express-session)
 
-# For mySQL
-- The user is admin and the password is password
-- Start the service on codespace (sudo service mysql start)
+# Instructions for Running
+1. Go to the /FEEDS/ directory
+2. Install all the requirements
+3. Run "node ./server.js"
+
+# For mySQL Database
+- Login into https://www.phpmyadmin.co/ using the credentials from the db.js code
+- View and edit the database tables
