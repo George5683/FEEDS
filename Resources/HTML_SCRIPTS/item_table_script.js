@@ -279,7 +279,6 @@ async function refresh(col, direction) {
           }
         }
       } else if (col == 2) {   // Sort by Date
-        // Currently not implemented
         let noDate = [];
         let hasDate = [];
         for (let i = 0; i < responseData.length; i++) {
@@ -313,7 +312,6 @@ async function refresh(col, direction) {
         }
 
       } else if (col == 3) {   // Sort by Favorite
-        // Issue when a user unfavorites an item and then sorts before refreshing page
         let favList = [];
         let notFavList = [];
         for (let i = 0; i < responseData.length; i++) {
@@ -375,7 +373,6 @@ async function addRow(name, status, date, id) {
   newImage.classList.add("foodimage");
   let nameText = document.createTextNode(name);
   let stockText = document.createTextNode(status);
-  // !! Data not present in database!!!!
   let dateText = document.createTextNode(date);
 
   let favStar = document.createElement("span");
