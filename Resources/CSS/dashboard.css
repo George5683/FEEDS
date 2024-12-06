@@ -10,9 +10,11 @@ body {
 }
 
 .topnav {
+  display: flex;
+  justify-content: space-between;
   background-color: #4e8f58;
-  overflow: hidden;
   width: 100%;
+  height: 47px;
 }
 
 /* Style the links inside the navigation bar */
@@ -25,8 +27,23 @@ body {
   font-size: 17px;
 }
 
+.topnav span {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+
 /* Change the color of links on hover */
 .topnav a:hover {
+  background-color: #101827;
+  color: white;
+}
+
+.topnav span:hover {
   background-color: #101827;
   color: white;
 }
@@ -93,6 +110,7 @@ h4 {
   background-color: white;
   width: 100%;
   border-radius: 40px;
+  height: 370px;
 }
 
 button {
@@ -106,6 +124,39 @@ button {
   margin-top: 20px;
   cursor: pointer;
   margin-left: 100px;
+}
+
+.drop {
+  float: left;
+  position: relative;
+}
+
+.dropItems {
+  display: none;
+  position: absolute;
+  overflow: auto;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  background-color: #4e8f58;
+  min-width: 119px;
+  margin-top: 47px;
+  max-height: 300px;
+}
+
+.dropItems a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 13px;
+  border-bottom: solid;
+  border-bottom-color: #101827;
+  display: block;
+  float: none;
+}
+
+.dropItems a:hover {
+  background-color: #101827;
 }
 
 button:hover {
@@ -136,24 +187,6 @@ button:hover {
   background-color: grey;
 }
 
-.close {
-  width: 20%;
-  padding: 6px;
-  background-color: red; 
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
-  margin-top: 20px;
-  cursor: pointer;
-  margin-left: 135px;
-  margin-bottom: 20px;
-}
-
-.close:hover {
-  background-color: darkred;
-}
-
 .information {
   background-color: white;
   width: 100%;
@@ -172,3 +205,135 @@ button:hover {
       grid-template-columns: 1fr; /* 1 column on very small screens */
   }
 }
+
+  /* Modal popup styling */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .logout-tab {
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    cursor: pointer;
+  }
+  
+  .logout-tab:hover {
+    background-color: #101827;
+    color: white;
+  }
+
+  /* Notification tab styles */
+.notification-tab {
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.notification-tab:hover {
+  background-color: #101827;
+  color: white;
+}
+
+/* Notification popup styles */
+.notification-popup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 60px; /* Below the topnav */
+  right: 20px; /* Position on the right */
+  background-color: #fff;
+  border: 1px solid #888;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  border-radius: 10px;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.notification-popup h2 {
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.notification-popup ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.notification-popup ul li {
+  font-size: 16px;
+  color: #101827;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  position: relative;
+  border-bottom: 1px solid gray;
+}
+
+.notification-popup ul li:hover {
+  background-color: #e5e5e5;
+}
+
+/* Notification text takes 70% of the width */
+.notification-popup ul li .notification-text {
+  flex-basis: 70%;
+  word-wrap: break-word;
+}
+
+/* Delete button (right side) */
+.del {
+  color: white;
+  border: none;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  /* cool color transition to be used on other stuff maybe? transition: background-color 0.3s; */
+}
+
+.del:hover {
+  background-color: darkred;
+}
+
