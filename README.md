@@ -1,5 +1,5 @@
 # FEEDS
-This is the software engineering project. 
+This is the software engineering project focused on creating a resource for gainesville occupants that provides information about pantries and their stock. The program allows for several user to be logged in at once as well as a pantry login for pantries to change their stock amounts. 
 
 # Requirements
 - install express (npm install express)
